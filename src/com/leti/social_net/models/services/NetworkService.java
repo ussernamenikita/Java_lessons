@@ -1,4 +1,4 @@
-package com.leti.social_net.models.Services;
+package com.leti.social_net.models.services;
 
 import com.leti.social_net.models.Comment;
 import com.leti.social_net.models.Message;
@@ -15,6 +15,9 @@ import java.util.List;
  */
 public interface NetworkService {
 
+
+    @NotNull
+    User registerNewUser(@NotNull String userName,@NotNull String password ,@NotNull String name,@NotNull String surname);
 
     /**
      * Get token what can be used for identify user by server.
@@ -79,6 +82,21 @@ public interface NetworkService {
 
 
     /**
+     * Add some user to friends
+     * @param token some string which could identify user on server.
+     * @param userId user which need add to friends
+     */
+    void addUserToFriend(@NotNull String token, int userId);
+
+
+    /**
+     * Remove some user to friends
+     * @param token some string which could identify user on server.
+     * @param userId user which need to remove from friends
+     */
+    void removeUserFromFriends(@NotNull String token, int userId);
+
+    /**
      * Get recent posts.
      * For example with offset = 0 and limit = 10
      * user receive last 10 added posts.
@@ -106,5 +124,7 @@ public interface NetworkService {
      * @return true if yes, false if no
      */
     boolean isNetworkAvailable();
+
+
 
 }
