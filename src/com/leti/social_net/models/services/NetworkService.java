@@ -74,11 +74,13 @@ public interface NetworkService {
 
 
     /**
+     *
      * Add coment to some post.
      * @param token some string which could identify user on server.
      * @param postId post id which you want to add comment
+     * @param text comment text
      */
-    void addComment(@NotNull String token,int postId);
+    void addComment(@NotNull String token,int postId,@NotNull String text);
 
 
     /**
@@ -125,6 +127,12 @@ public interface NetworkService {
      */
     boolean isNetworkAvailable();
 
-
+    /**
+     * Set new data to user.
+     * Change name or surnme or etc
+     * @param token user token
+     * @param newUserData new data
+     */
+    public void updateUserData(@NotNull String token, @NotNull User newUserData);
 
 }

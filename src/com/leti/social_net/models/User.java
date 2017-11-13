@@ -8,13 +8,30 @@ public class User {
     private String address;
     private String phone;
     private String email;
-    private String birthdate;
+    private String birthday;
     private String company;
     private Boolean online;
     private String avatar;
     private String surname;
     private String name;
     private Integer id;
+
+    public User() {
+    }
+
+    public User(String registered, String address, String phone, String email, String birthday, String company, Boolean online, String avatar, String surname, String name, Integer id) {
+        this.registered = registered;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.birthday = birthday;
+        this.company = company;
+        this.online = online;
+        this.avatar = avatar;
+        this.surname = surname;
+        this.name = name;
+        this.id = id;
+    }
 
     public String getRegistered() {
         return registered;
@@ -48,12 +65,12 @@ public class User {
         this.email = email;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getCompany() {
