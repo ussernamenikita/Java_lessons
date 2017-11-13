@@ -145,19 +145,39 @@ public class NetworkPlaceholder implements NetworkService {
     @Override
     public void addComment(String token, int postId, String text) {
         Integer id  = Token.getIdFromToken(token);
+        //TODO post id check
         Comment comment = new Comment();
-
+        comment.setId(comments.size()+1);
+        comment.setPostId(postId);
+        comment.setText(text);
+        comments.add(comment);
     }
 
 
     @Override
     public void addUserToFriend(String token, int userId) {
-
+        User newFriend = findUserById(userId);
+        Integer i = Token.getIdFromToken(token);
+        if(i == null) {
+            return;
+        }
+        User currentUser = findUserById(i);
+        if (currentUser != null && newFriend != null) {
+            List<User> friendsL = friends.computeIfAbsent(currentUser, k -> new ArrayList<>(10));
+            friendsL.add(newFriend);
+        }
     }
 
     @Override
     public void removeUserFromFriends(String token, int userId) {
-
+        Integer id = Token.getIdFromToken(token);
+        User newFriend = findUserById(userId);
+        if (id == null || newFriend == null || findUserById(id) == null) {
+            return;
+        }
+        User user = findUserById(id);
+        List<User> friendsL = friends.computeIfAbsent(user,k -> new ArrayList<>(10));
+        friendsL.add(newFriend);
     }
 
     @Override
@@ -175,10 +195,7 @@ public class NetworkPlaceholder implements NetworkService {
         return true;
     }
 
-    @Override
-    public void updateUserData(String token, User newUserData) {
-        int userId = token;
-    }
+
 
 
 }

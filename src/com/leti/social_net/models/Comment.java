@@ -5,7 +5,7 @@ package com.leti.social_net.models;
  */
 public class Comment {
     private Integer id;
-    private String postId;
+    private Integer postId;
     private String text;
     private Integer likeCount;
 
@@ -17,11 +17,11 @@ public class Comment {
         this.id = id;
     }
 
-    public String getPostId() {
+    public Integer getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
