@@ -25,6 +25,7 @@ public class NetworkPlaceholder implements NetworkService {
     ArrayList<Post> posts;
     ArrayList<Comment> comments;
     HashMap<User,List<User>> friends;
+    ArrayList<Pair<String,Integer>> LP;
 
 
     private NetworkPlaceholder() {
@@ -58,6 +59,9 @@ public class NetworkPlaceholder implements NetworkService {
                     friends.put(users.get(i),friendsL);
                 }
             }
+        }
+        for (int i = 1; i < users.size(); i++) {
+            LP.add(new Pair<>("user"+i+"password"+i,i));
         }
     }
 
@@ -139,7 +143,7 @@ public class NetworkPlaceholder implements NetworkService {
         {
             posts.add(post);
         }
-        //TODO log,exeception
+        //TODO log,exception
     }
 
     @Override
@@ -150,6 +154,7 @@ public class NetworkPlaceholder implements NetworkService {
         comment.setId(comments.size()+1);
         comment.setPostId(postId);
         comment.setText(text);
+        comment.setUserId(id);
         comments.add(comment);
     }
 
@@ -182,12 +187,30 @@ public class NetworkPlaceholder implements NetworkService {
 
     @Override
     public Pair<Long, List<Post>> getRecentPosts(String token, long offset, int limit) {
-        return null;
+        int size = posts.size();
+        if(offset > size)
+        {
+            return null;
+        }else
+        {
+            int intOffset = (int) offset;
+            if(limit+intOffset > size)
+            {
+                limit = size;
+            }else
+                limit = limit+intOffset;
+            return new Pair<>((long) limit-1,posts.subList(intOffset,limit));
+        }
     }
 
     @Override
-    public List<Comment> getCommentOfPosts(int postId) {
-        return null;
+    public List<Comment> getCommentOfPost(int postId) {
+        List<Comment> resuzltComments= new ArrayList<>();
+        comments.forEach(comment -> {
+            if(comment.getPostId().equals(postId))
+                resuzltComments.add(comment);
+        });
+        return resuzltComments;
     }
 
     @Override
@@ -195,7 +218,27 @@ public class NetworkPlaceholder implements NetworkService {
         return true;
     }
 
+    @Override
+    public void updateUserData(String token, User newUserData) {
+        int id = Token.getIdFromToken(token);
+        if(id == newUserData.getId())
+        {
+            User oldUser = users.get(users.indexOf(newUserData));
+            oldUser.update(newUserData);
+        }
+    }
 
+    @Override
+    public int createNewUser(User newUser) {
+        newUser.setId(users.size());
+        users.add(newUser);
+        return users.size()-1;
+    }
+
+    @Override
+    public String login(String login, String password) {
+
+    }
 
 
 }

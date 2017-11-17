@@ -1,5 +1,7 @@
 package com.leti.social_net.models;
 
+import java.util.Objects;
+
 /**
  * User model class
  */
@@ -119,5 +121,40 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    /**
+     * Update all fields
+     * this{@link #id} and newUserData.id must be equals.
+     * @param newUserData object with new data
+     */
+    public void update(User newUserData) {
+        if(id.equals(newUserData.id)) {
+            this.registered = newUserData.registered;
+            this.address = newUserData.address;
+            this.phone = newUserData.phone;
+            this.email = newUserData.email;
+            this.birthday = newUserData.birthday;
+            this.company = newUserData.company;
+            this.online = newUserData.online;
+            this.avatar = newUserData.avatar;
+            this.surname = newUserData.surname;
+            this.name = newUserData.name;
+        }
     }
 }

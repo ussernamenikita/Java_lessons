@@ -107,7 +107,7 @@ public interface NetworkService {
      * @param token some string which could identify user on server.
      * @param offset offset by posts count
      * @param limit count of post need receive
-     * @return list of recent posts, and index of last received post
+     * @return list of recent posts, and index of last received post.
      */
     @Nullable
     Pair<Long,List<Post>> getRecentPosts(@NotNull String token, long offset, int limit);
@@ -118,7 +118,7 @@ public interface NetworkService {
      * @return list of comments
      */
     @Nullable
-    List<Comment> getCommentOfPosts(int postId);
+    List<Comment> getCommentOfPost(int postId);
 
 
     /**
@@ -135,4 +135,19 @@ public interface NetworkService {
      */
     public void updateUserData(@NotNull String token, @NotNull User newUserData);
 
+    /**
+     *
+     * Register new user on server
+     * @param newUser new user
+     * @return id of new user
+     */
+    int createNewUser(User newUser);
+
+    /**
+     * User login request
+     * @param login usrss login
+     * @param password users password
+     * @return token fro this user
+     */
+    String  login(String login, String password);
 }

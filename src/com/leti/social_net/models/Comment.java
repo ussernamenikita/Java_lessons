@@ -9,6 +9,16 @@ public class Comment {
     private String text;
     private Integer likeCount;
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    private Integer userId;
+
     public Integer getId() {
         return id;
     }
