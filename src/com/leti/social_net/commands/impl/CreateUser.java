@@ -29,7 +29,7 @@ public class CreateUser implements Command{
         logger.info("Execute create user command");
         NetworkService service = receiver.getNetwork();
         //TODO add data to user(name,lastname etc.)
-        User user = service.registerNewUser("Username","password","Superman","Blablablaev");
+        User user = service.registerNewUser("username","password","Superman","Blablablaev");
         userDao.saveUsersInfo(user);
         logger.info("User created with id "+user.getId());
     }

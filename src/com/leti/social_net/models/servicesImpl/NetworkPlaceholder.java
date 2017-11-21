@@ -29,7 +29,7 @@ public class NetworkPlaceholder implements NetworkService {
     HashMap<User,List<User>> friends;
 
 
-    private NetworkPlaceholder() {
+    public NetworkPlaceholder() {
         Gson gson = new Gson();
         Type usersType = new TypeToken<List<User>>() {
         }.getType();
@@ -79,7 +79,7 @@ public class NetworkPlaceholder implements NetworkService {
         }
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Token.registerToken(userName,password,Integer.toString(users.size()+1));
+        Token.registerToken(userName,password,Integer.toString(users.size()));
         User newUser = new User(format.format(date),null,null,null,null,
                 "LETI",true,null,surname,name,users.size());
         users.add(newUser);
