@@ -6,6 +6,7 @@ import com.leti.social_net.commands.Command;
 import com.leti.social_net.models.*;
 import com.leti.social_net.models.services.NetworkService;
 import javafx.util.Pair;
+import org.apache.log4j.Logger;
 
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -19,13 +20,13 @@ public class NetworkPlaceholder implements NetworkService {
 
     private static NetworkPlaceholder instance;
     private Random random = new Random(System.currentTimeMillis());
+    private static Logger Log = Logger.getLogger(NetworkPlaceholder.class);
 
     ArrayList<User> users;
     ArrayList<Message> messages;
     ArrayList<Post> posts;
     ArrayList<Comment> comments;
     HashMap<User,List<User>> friends;
-    ArrayList<Pair<String,Integer>> LP;
 
 
     private NetworkPlaceholder() {
@@ -60,9 +61,6 @@ public class NetworkPlaceholder implements NetworkService {
                 }
             }
         }
-        for (int i = 1; i < users.size(); i++) {
-            LP.add(new Pair<>("user"+i+"password"+i,i));
-        }
     }
 
     public static NetworkPlaceholder getInstance()
@@ -74,16 +72,26 @@ public class NetworkPlaceholder implements NetworkService {
 
     @Override
     public User registerNewUser(String userName, String password, String name, String surname) {
+        if(Token.isUserNameExists(userName))
+        {
+            Log.info("User with username="+userName+" already exists");
+            return null;
+        }
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Token.registerToken(userName,password,Integer.toString(users.size()+1));
-        return new User(format.format(date),null,null,null,null,
-                "LETI",true,null,surname,name,users.size()+1);
+        User newUser = new User(format.format(date),null,null,null,null,
+                "LETI",true,null,surname,name,users.size());
+        users.add(newUser);
+        return newUser;
     }
 
     @Override
     public String getToken(String userName, String password) {
-        return Token.getToken(userName,password);
+        String t= Token.getToken(userName,password);
+        if(t != null)
+            users.get(Token.getIdFromToken(t)).setOnline(true);
+        return t;
     }
 
     @Override
@@ -220,8 +228,8 @@ public class NetworkPlaceholder implements NetworkService {
 
     @Override
     public void updateUserData(String token, User newUserData) {
-        int id = Token.getIdFromToken(token);
-        if(id == newUserData.getId())
+        Integer id = Token.getIdFromToken(token);
+        if(id != null && id.equals(newUserData.getId()))
         {
             User oldUser = users.get(users.indexOf(newUserData));
             oldUser.update(newUserData);
@@ -229,15 +237,49 @@ public class NetworkPlaceholder implements NetworkService {
     }
 
     @Override
-    public int createNewUser(User newUser) {
-        newUser.setId(users.size());
-        users.add(newUser);
-        return users.size()-1;
+    public int getFriendsCount(String token) {
+        Integer id = Token.getIdFromToken(token);
+        if(id == null)
+            return 0;
+        return getFriendsCount(id);
     }
 
     @Override
-    public String login(String login, String password) {
+    public List<User> getUserFriends(String token, int limit, int offset) {
+        Integer id = Token.getIdFromToken(token);
+        if(id != null)
+        {
+            return getUserFriends(id,limit,offset);
+        }
+        return null;
+    }
 
+    @Override
+    public boolean isFriends(Integer userId, Integer userTo) {
+        List<User> uFriends = friends.get(getUserById(userId));
+        if(uFriends != null)
+        {
+            return uFriends.contains(getUserById(userTo));
+        }else
+            return false;
+    }
+
+    @Override
+    public List<Message> getMessgaes(Integer userTo, Integer userFrom) {
+        int size = users.size();
+        if(size > userTo && size > userFrom && userTo > 0 && userFrom > 0)
+        {
+            List<Message> msg = new ArrayList<>(messages.size()/2);
+            messages.forEach(message -> {
+                if(message.getUserIdFrom().equals(userFrom) && message.getUserIdTo().equals(userTo))
+                {
+                    msg.add(message);
+                }
+            });
+            msg.sort((o1, o2) -> (int) (o1.getSendTimestamp() - o2.getSendTimestamp()));
+            return msg;
+        }
+        return null;
     }
 
 

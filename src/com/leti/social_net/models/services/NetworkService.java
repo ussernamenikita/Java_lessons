@@ -1,9 +1,6 @@
 package com.leti.social_net.models.services;
 
-import com.leti.social_net.models.Comment;
-import com.leti.social_net.models.Message;
-import com.leti.social_net.models.Post;
-import com.leti.social_net.models.User;
+import com.leti.social_net.models.*;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 import javafx.util.Pair;
@@ -135,19 +132,43 @@ public interface NetworkService {
      */
     public void updateUserData(@NotNull String token, @NotNull User newUserData);
 
-    /**
-     *
-     * Register new user on server
-     * @param newUser new user
-     * @return id of new user
-     */
-    int createNewUser(User newUser);
+
 
     /**
-     * User login request
-     * @param login usrss login
-     * @param password users password
-     * @return token fro this user
+     * Get users friends count
+     * @param token user token whose friends count need
+     * @return count of friends
      */
-    String  login(String login, String password);
+    int getFriendsCount(String token);
+
+    /**
+     * Get user friends list from server.
+     * Limit and offset use for part load,
+     * for example, there are so many friends
+     *  that you can not get all at once.
+     * @param token of user whose friends you want to get
+     * @param limit how many users need receive
+     * @param offset begin index in friends list( last index = offset+limit)
+     * @return users list or null. Return null if users
+     * friends count < offset
+     */
+    @Nullable
+    List<User> getUserFriends(String token,int limit,int offset);
+
+    /**
+     * Check if user with id userId is friend for user with id userTo
+     * @param userId first user id
+     * @param userTo second user id
+     * @return true if user with id userId friend for user with id userTo
+     */
+    boolean isFriends(Integer userId, Integer userTo);
+
+    /**
+     * Get all messages from user with id userTo,
+     * sent to user with id equals userFrom
+     * @param userTo user id to
+     * @param userFrom user id from
+     * @return all messages from userFrom to userTo
+     */
+    List<Message> getMessgaes(Integer userTo,Integer userFrom);
 }

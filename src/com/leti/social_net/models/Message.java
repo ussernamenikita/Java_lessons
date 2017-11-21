@@ -8,8 +8,8 @@ public class Message {
     private Integer userIdFrom;
     private Integer userIdTo;
     private String message;
-    private Integer sendTimestamp;
-    private Integer readTimestamp;
+    private Long sendTimestamp;
+    private Long readTimestamp;
 
     public Integer getUserIdFrom() {
         return userIdFrom;
@@ -35,20 +35,19 @@ public class Message {
         this.message = message;
     }
 
-    public Integer getSendTimestamp() {
+    public Long getSendTimestamp() {
         return sendTimestamp;
     }
 
-    public void setSendTimestamp(Integer sendTimestamp) {
+    public void setSendTimestamp(Long sendTimestamp) {
         this.sendTimestamp = sendTimestamp;
     }
 
-    public Integer getReadTimestamp() {
+    public Long getReadTimestamp() {
         return readTimestamp;
     }
 
-    public void setReadTimestamp(Integer readTimestamp) {
+    public void setReadTimestamp(Long readTimestamp) {
         this.readTimestamp = readTimestamp;
     }
-
 }
