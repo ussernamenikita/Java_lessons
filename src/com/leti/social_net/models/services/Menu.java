@@ -20,10 +20,17 @@ public class Menu {
 
     public void showMenu() {
         try(Scanner scanner = new Scanner(System.in, "UTF-8")) {
-            System.out.println("Enter the command number");
-            int i = scanner.nextInt();
-            invoker.setCommand(commands.get(i));
-            invoker.run();
+            int i = 1;
+            while (i != -1) {
+                for (int j = 0; j < commands.size(); j++) {
+                    System.out.println(j + ":" + commands.get(i).getName());
+                }
+                i = scanner.nextInt();
+                if (i > 0 && i < commands.size()) {
+                    invoker.setCommand(commands.get(i));
+                    invoker.run();
+                }
+            }
         }
     }
 }

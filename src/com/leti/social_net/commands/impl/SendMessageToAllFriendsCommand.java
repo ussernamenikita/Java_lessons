@@ -20,27 +20,31 @@ public class SendMessageToAllFriendsCommand implements Command {
 
     private final Receiver receiver ;
     private final DatabaseService messagesDao;
-    private final String message;
-    private final String token;
 
-    public SendMessageToAllFriendsCommand(Receiver receiver, DatabaseService messagesDao, String message, String token) {
+
+    public SendMessageToAllFriendsCommand(Receiver receiver, DatabaseService messagesDao) {
         this.receiver = receiver;
         this.messagesDao = messagesDao;
-        this.message = message;
-        this.token = token;
+
     }
 
     @Override
     public void execute() {
         logger.info("Execute send to all friends");
+        String message = null;
         NetworkService network = receiver.getNetwork();
+        System.out.println("Enter your token");
+        String token = receiver.getScanner().next();
         int count = network.getFriendsCount(token);
         if(count > 0)
         {
+            System.out.println("Enter your message");
+            message = receiver.getScanner().next();
+            final String localMsg = message;
             List<User> friends = network.getUserFriends(token,count,0);
             friends.forEach(user -> {
                 Message msg = new Message();
-                msg.setMessage(message);
+                msg.setMessage(localMsg);
                 //Time in seconds
                 msg.setSendTimestamp(System.currentTimeMillis()/1000);
                 msg.setUserIdFrom(Token.getIdFromToken(token));
@@ -48,8 +52,12 @@ public class SendMessageToAllFriendsCommand implements Command {
                 network.sendMessage(msg);
             });
         };
-        //TODO messagesDao.addTosent
         logger.info("Message \""+message+"\" send to "+count+" users");
+    }
+
+    @Override
+    public String getName() {
+        return "Get message to all friends";
     }
 
 }

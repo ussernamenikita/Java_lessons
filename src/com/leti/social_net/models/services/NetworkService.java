@@ -13,7 +13,7 @@ import java.util.List;
 public interface NetworkService {
 
 
-    @NotNull
+    @Nullable
     User registerNewUser(@NotNull String userName,@NotNull String password ,@NotNull String name,@NotNull String surname);
 
     /**
@@ -162,6 +162,16 @@ public interface NetworkService {
      * @return true if user with id userId friend for user with id userTo
      */
     boolean isFriends(Integer userId, Integer userTo);
+
+
+    /**
+     * Check if user with token is friend for user with id userTo
+     * @param token token for first user
+     * @param secondUsrId second user id
+     * @return true if user with id userId friend for user with id userTo
+     */
+    boolean isFriends(String token,Integer secondUsrId);
+
 
     /**
      * Get all messages from user with id userTo,

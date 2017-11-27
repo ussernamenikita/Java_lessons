@@ -5,4 +5,5 @@ package com.leti.social_net.commands;
  */
 public interface Command {
     void execute();
+    String getName();
 }

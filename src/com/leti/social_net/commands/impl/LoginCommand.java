@@ -8,7 +8,7 @@ import javafx.util.Pair;
 import org.apache.log4j.Logger;
 
 /**
- * Login command, TODO handle result
+ * Login command
  */
 public class LoginCommand  implements Command{
 
@@ -16,18 +16,11 @@ public class LoginCommand  implements Command{
 
     private final Receiver receiver ;
     private final DatabaseService storage;
-    private static Pair<String,String> LP;
     private String resultToken = null;
 
-    public LoginCommand(Receiver receiver, DatabaseService storage,String login,String password) {
+    public LoginCommand(Receiver receiver, DatabaseService storage) {
         this.receiver = receiver;
         this.storage = storage;
-        if(login == null || password == null || login.isEmpty() || password.isEmpty())
-        {
-            logger.warn("Try login with null or empty login or password");
-            throw new IllegalArgumentException("User and password can't be null or empty string!");
-        }
-        LP = new Pair<>(login,password);
     }
 
 
@@ -35,11 +28,29 @@ public class LoginCommand  implements Command{
     public void execute() {
         logger.info("Execute login command");
         NetworkService service = receiver.getNetwork();
-        resultToken =  service.getToken(LP.getKey(),LP.getValue());
+        System.out.println("Enter login");
+        String login  = receiver.getScanner().next();
+        System.out.println("Enter password");
+        String password = receiver.getScanner().next();
+        if(login == null || password == null || login.isEmpty() || password.isEmpty())
+        {
+            logger.warn("Try login with null or empty login or password");
+            throw new IllegalArgumentException("User and password can't be null or empty string!");
+        }
+        resultToken =  service.getToken(login,password);
+        if(resultToken != null)
+        {
+            System.out.println("Successful, your token is "+resultToken);
+        }else
+        {
+            System.out.println("Can't login");
+        }
         logger.info("login command "+(resultToken!= null ? " success ": " fail "));
     }
 
-    public String getResultToken() {
-        return resultToken;
+    @Override
+    public String getName() {
+        return "Login";
     }
+
 }

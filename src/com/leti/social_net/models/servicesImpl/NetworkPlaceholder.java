@@ -265,6 +265,12 @@ public class NetworkPlaceholder implements NetworkService {
     }
 
     @Override
+    public boolean isFriends(String token, Integer secondUsrId) {
+        Integer integer = Token.getIdFromToken(token);
+        return isFriends(integer,secondUsrId);
+    }
+
+    @Override
     public List<Message> getMessgaes(Integer userTo, Integer userFrom) {
         int size = users.size();
         if(size > userTo && size > userFrom && userTo > 0 && userFrom > 0)

@@ -28,9 +28,28 @@ public class CreateUser implements Command{
     public void execute() {
         logger.info("Execute create user command");
         NetworkService service = receiver.getNetwork();
-        //TODO add data to user(name,lastname etc.)
-        User user = service.registerNewUser("username","password","Superman","Blablablaev");
+        System.out.println("Input username");
+        String username = receiver.getScanner().next();
+        System.out.println("Input password");
+        String password = receiver.getScanner().next();
+        System.out.println("Input name");
+        String name = receiver.getScanner().next();
+        System.out.println("Input last name");
+        String lastname = receiver.getScanner().next();
+        User user = service.registerNewUser(username,password,name,lastname);
+        if(user != null)
+        {
+            logger.info("User created with id "+user.getId());
+            System.out.println("Successful create user");
+        }else {
+            logger.info("User not created");
+            System.out.println("Error while creating user");
+        }
         userDao.saveUsersInfo(user);
-        logger.info("User created with id "+user.getId());
+    }
+
+    @Override
+    public String getName() {
+        return "Create new user";
     }
 }

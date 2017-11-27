@@ -12,42 +12,48 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 /**
- * Created by Nikita on 21.11.2017.
+ * Send message to particular user
  */
 public class SendMessageToParticularUserCommand implements Command {
     private static final Logger logger = Logger.getLogger(SendMessageToParticularUserCommand.class);
 
     private final Receiver receiver;
     private final DatabaseService messagesDao;
-    private final String message;
-    private final String token;
-    private final Integer userTo;
+    private String message;
+    private String token;
+    private Integer userTo;
 
-    public SendMessageToParticularUserCommand(Receiver receiver, DatabaseService messagesDao, String message, String token, Integer userTo) {
+    public SendMessageToParticularUserCommand(Receiver receiver, DatabaseService messagesDao) {
         this.receiver = receiver;
         this.messagesDao = messagesDao;
-        this.message = message;
-        this.token = token;
-        this.userTo = userTo;
     }
 
     @Override
     public void execute() {
         logger.info("Execute send to particular user");
         NetworkService network = receiver.getNetwork();
+        System.out.println("Enter yout token");
+        token = receiver.getScanner().next();
         Integer userId = Token.getIdFromToken(token);
         if (userId == null) {
             logger.error("Invalid token,can't send message");
             return;
         }
+        System.out.println("Enter message");
+        message = receiver.getScanner().next();
         Message msg = new Message();
         msg.setMessage(message);
         //Time in seconds
         msg.setSendTimestamp(System.currentTimeMillis() / 1000);
         msg.setUserIdFrom(userId);
+        System.out.println("Enter user id to send");
         msg.setUserIdTo(userTo);
         network.sendMessage(msg);
-        //TODO messagesDao.addTosent
         logger.info("Message \"" + message + "\" sent to user with id="+userTo);
+    }
+
+    @Override
+    public String getName() {
+        return "Send message to particular user";
     }
 }

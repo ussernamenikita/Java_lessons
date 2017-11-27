@@ -69,5 +69,16 @@ public class Post {
         this.likeCount = likeCount;
     }
 
-
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author=" + author +
+                ", mediaId=" + mediaId +
+                ", text='" + text + '\'' +
+                ", likeCount=" + likeCount +
+                ", postedTime=" + postedTime +
+                '}';
+    }
 }
