@@ -1,4 +1,4 @@
-package com.leti.social_net.models.services;
+package com.leti.social_net.services;
 
 import com.leti.social_net.models.Message;
 
@@ -18,7 +18,7 @@ public class Rating {
                 .map(Arrays::asList)
                 .flatMap(Collection::stream)
                 .filter(strings -> !strings.isEmpty())
-                .map(s -> s.replaceAll("[^A-Za-z0-9]",""))
+                .map(s -> s.replaceAll(".,?!\"'&*#@",""))
                 .filter(s -> {
                     Integer r = wordsRating.get(s);
                     if(r != null)

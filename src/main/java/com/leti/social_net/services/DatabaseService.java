@@ -1,4 +1,4 @@
-package com.leti.social_net.models.services;
+package com.leti.social_net.services;
 
 import com.leti.social_net.models.User;
 import com.sun.istack.internal.NotNull;
