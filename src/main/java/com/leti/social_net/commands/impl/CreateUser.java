@@ -2,8 +2,8 @@ package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.Receiver;
+import com.leti.social_net.dao.UserDao;
 import com.leti.social_net.models.User;
-import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
 
 import java.util.logging.Logger;
@@ -16,9 +16,9 @@ public class CreateUser implements Command{
     private static final Logger logger = Logger.getLogger(CreateUser.class.getSimpleName());
 
     private final Receiver receiver ;
-    private final DatabaseService userDao;
+    private final UserDao userDao;
 
-    public CreateUser(Receiver receiver, DatabaseService userDao) {
+    public CreateUser(Receiver receiver, UserDao userDao) {
         this.receiver = receiver;
         this.userDao = userDao;
     }
@@ -45,7 +45,7 @@ public class CreateUser implements Command{
             logger.info("UserDaoImpl not created");
             System.out.println("Error while creating user");
         }
-        userDao.saveUsersInfo(user);
+        userDao.insertOrUpdate(user);
     }
 
     @Override

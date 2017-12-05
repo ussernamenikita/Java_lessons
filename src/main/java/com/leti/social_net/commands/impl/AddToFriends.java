@@ -12,15 +12,13 @@ import com.leti.social_net.services.NetworkService;
 public class AddToFriends implements Command {
 
     private final Receiver receiver ;
-    private final DatabaseService databaseService;
     private String token;
 
 
 
 
-    public AddToFriends(Receiver receiver, DatabaseService databaseService, String token) {
+    public AddToFriends(Receiver receiver, String token) {
         this.receiver = receiver;
-        this.databaseService = databaseService;
         this.token = token;
     }
 

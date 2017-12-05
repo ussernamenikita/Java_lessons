@@ -6,17 +6,17 @@ import com.sun.istack.internal.NotNull;
 import java.util.List;
 
 /**
- * Local database service.
+ * Service for mock part
  */
 public interface DatabaseService {
 
-    //TODO write methods
+    public boolean saveUsersInfo(@NotNull List<User> users);
 
-    public void saveUsersInfo(@NotNull List<User> users);
-
-    public void saveUsersInfo(@NotNull User user);
+    public boolean saveUsersInfo(@NotNull User user);
 
     public User getUserById(int id);
+
+
 
 
 

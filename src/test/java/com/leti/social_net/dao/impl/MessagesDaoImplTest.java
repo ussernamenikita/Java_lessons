@@ -36,6 +36,7 @@ public class MessagesDaoImplTest extends TestCase {
         List<Message> localMsgs = dao.getMessages(1,2);
         dao.putMessage(localMsgs.get(0));
         assertTrue(localMsgs.size() == (dao.getMessages(1,2).size()-1));
+
     }
 
     public void testCreateIfNotExistsTable() throws Exception {

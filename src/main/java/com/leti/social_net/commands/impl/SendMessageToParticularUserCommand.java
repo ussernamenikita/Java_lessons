@@ -2,6 +2,7 @@ package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.Receiver;
+import com.leti.social_net.dao.MessagesDao;
 import com.leti.social_net.models.Message;
 import com.leti.social_net.models.Token;
 import com.leti.social_net.services.DatabaseService;
@@ -15,12 +16,12 @@ public class SendMessageToParticularUserCommand implements Command {
     private static final Logger logger = Logger.getLogger(SendMessageToParticularUserCommand.class);
 
     private final Receiver receiver;
-    private final DatabaseService messagesDao;
+    private final MessagesDao messagesDao;
     private String message;
     private String token;
     private Integer userTo;
 
-    public SendMessageToParticularUserCommand(Receiver receiver, DatabaseService messagesDao) {
+    public SendMessageToParticularUserCommand(Receiver receiver, MessagesDao messagesDao) {
         this.receiver = receiver;
         this.messagesDao = messagesDao;
     }
@@ -46,6 +47,7 @@ public class SendMessageToParticularUserCommand implements Command {
         System.out.println("Enter user id to send");
         msg.setUserIdTo(userTo);
         network.sendMessage(msg);
+        messagesDao.putMessage(msg);
         logger.info("Message \"" + message + "\" sent to user with id="+userTo);
     }
 

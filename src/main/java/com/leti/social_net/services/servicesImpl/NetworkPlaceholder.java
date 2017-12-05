@@ -43,13 +43,16 @@ public class NetworkPlaceholder implements NetworkService {
         }.getType();
         comments = gson.fromJson(new InputStreamReader(loader.getResourceAsStream("Comments.json")), commentType);
         for (int i = 0; i < users.size(); i++) {
+            Token.registerToken(users.get(i).getId().toString(),
+                    users.get(i).getId().toString(),
+                    users.get(i).getId().toString());
             Random random = new Random(System.currentTimeMillis());
             int count = random.nextInt(users.size());
             if (count > 0) {
                 List<User> friendsL = new ArrayList<>();
                 for (int j = 0; j < count; j++) {
                     User newFriend = users.get(random.nextInt(users.size()));
-                    if(newFriend != users.get(i))
+                    if(newFriend != users.get(i) && !friendsL.contains(newFriend))
                     {
                         friendsL.add(newFriend);
                     }
@@ -60,6 +63,7 @@ public class NetworkPlaceholder implements NetworkService {
                 }
             }
         }
+
     }
 
 
@@ -264,7 +268,7 @@ public class NetworkPlaceholder implements NetworkService {
     @Override
     public List<Message> getMessgaes(Integer userTo, Integer userFrom) {
         int size = users.size();
-        if(size > userTo && size > userFrom && userTo > 0 && userFrom > 0)
+        if(size > userTo && size > userFrom && userTo >= 0 && userFrom >= 0)
         {
             List<Message> msg = new ArrayList<>(messages.size()/2);
             messages.forEach(message -> {

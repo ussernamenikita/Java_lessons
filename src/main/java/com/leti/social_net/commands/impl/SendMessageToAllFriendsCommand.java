@@ -2,6 +2,7 @@ package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.Receiver;
+import com.leti.social_net.dao.MessagesDao;
 import com.leti.social_net.models.Message;
 import com.leti.social_net.models.Token;
 import com.leti.social_net.models.User;
@@ -19,10 +20,10 @@ public class SendMessageToAllFriendsCommand implements Command {
     private static final Logger logger = Logger.getLogger(SendMessageToAllFriendsCommand.class);
 
     private final Receiver receiver ;
-    private final DatabaseService messagesDao;
+    private final MessagesDao messagesDao;
 
 
-    public SendMessageToAllFriendsCommand(Receiver receiver, DatabaseService messagesDao) {
+    public SendMessageToAllFriendsCommand(Receiver receiver, MessagesDao messagesDao) {
         this.receiver = receiver;
         this.messagesDao = messagesDao;
 
@@ -49,6 +50,8 @@ public class SendMessageToAllFriendsCommand implements Command {
                 msg.setSendTimestamp(System.currentTimeMillis()/1000);
                 msg.setUserIdFrom(Token.getIdFromToken(token));
                 msg.setUserIdTo(user.getId());
+                //Save message to database
+                messagesDao.putMessage(msg);
                 network.sendMessage(msg);
             });
         };

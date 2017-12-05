@@ -158,4 +158,21 @@ public class User {
             this.name = newUserData.name;
         }
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "registered='" + registered + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", company='" + company + '\'' +
+                ", online=" + online +
+                ", avatar='" + avatar + '\'' +
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

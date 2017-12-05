@@ -14,12 +14,11 @@ public class LoginCommand  implements Command{
     private static final Logger logger = Logger.getLogger(LoginCommand.class);
 
     private final Receiver receiver ;
-    private final DatabaseService storage;
     private String resultToken = null;
 
-    public LoginCommand(Receiver receiver, DatabaseService storage) {
+    public LoginCommand(Receiver receiver) {
         this.receiver = receiver;
-        this.storage = storage;
+
     }
 
 

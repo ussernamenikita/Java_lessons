@@ -34,7 +34,7 @@ public class Token {
 
     public static void registerToken(@NotNull String userName,@NotNull String password,@NotNull String id)
     {
-        tokens.put(userName+password,id);
+        tokens.put(userName+"@"+password,id);
     }
 
     @Nullable

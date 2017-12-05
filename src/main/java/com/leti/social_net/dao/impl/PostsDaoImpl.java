@@ -104,8 +104,8 @@ public class PostsDaoImpl extends DaoBase implements PostsDao {
                 "author integer NOT NULL,\n" +
                 "mediaId integer ,\n" +
                 "_text text   NOT NULL,\n" +
-                "likeCount DOUBLE NOT NULL,\n" +
-                "postedTime DOUBLE NOT NULL)";
+                "likeCount integer NOT NULL,\n" +
+                "postedTime integer NOT NULL)";
         try {
             Statement  statement = connection.createStatement();
             statement.execute(sqlCommandText);

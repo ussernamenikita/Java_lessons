@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Configuration.class);
-        Menu menu = (Menu) applicationContext.getBean("Menu");
+        Menu menu = (Menu) applicationContext.getBean("menu");
         menu.showMenu();
         applicationContext.close();
     }

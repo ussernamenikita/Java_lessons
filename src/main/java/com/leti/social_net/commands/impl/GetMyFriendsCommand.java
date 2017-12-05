@@ -30,7 +30,9 @@ public class GetMyFriendsCommand implements Command {
         String token = receiver.getScanner().next();
         NetworkService network = receiver.getNetwork();
         userFriends = network.getUserFriends(token,network.getFriendsCount(token),0);
-        userFriends.forEach(System.out::println);
+        if(userFriends != null) {
+            userFriends.forEach(System.out::println);
+        }
         logger.info("Receive "+(userFriends == null ? 0 : userFriends.size())+" freinds");
     }
 

@@ -5,9 +5,7 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/**
- * Created by Nikita on 28.11.2017.
- */
+
 public abstract class DaoBase {
 
     Logger logger = Logger.getLogger(DaoBase.class);

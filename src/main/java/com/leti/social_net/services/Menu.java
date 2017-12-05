@@ -33,10 +33,10 @@ public class Menu {
             int i = 1;
             while (i != -1) {
                 for (int j = 0; j < commands.size(); j++) {
-                    System.out.println(j + ":" + commands.get(i).getName());
+                    System.out.println(j + ":" + commands.get(j).getName());
                 }
                 i = scanner.nextInt();
-                if (i > 0 && i < commands.size()) {
+                if (i >= 0 && i < commands.size()) {
                     invoker.setCommand(commands.get(i));
                     invoker.run();
                 }
@@ -44,22 +44,7 @@ public class Menu {
         }
     }
 
-    @Autowired
-    @Bean
-    public List<Command> getDafaulMenu(Receiver receiver, DatabaseService databaseService)
-    {
-        ArrayList<Command> cmds = new ArrayList<>(10);
-        cmds.add(new LoginCommand(receiver,databaseService));
-        cmds.add(new CreateUser(receiver,databaseService));
-        cmds.add(new LoginCommand(receiver,databaseService));
-        cmds.add(new AddToFriends(receiver,databaseService,"10"));
-        cmds.add(new GetMyFriendsCommand(receiver));
-        cmds.add(new GetAllMessageFromFriendsCommand(receiver));
-        cmds.add(new GetMessagesFromParticularFriendCommand(receiver));
-        cmds.add(new SendMessageToAllFriendsCommand(receiver,databaseService));
-        cmds.add(new SendMessageToParticularUserCommand(receiver,databaseService));
-        return cmds;
-    }
+
 
 
 }

@@ -8,6 +8,7 @@ import com.leti.social_net.models.User;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,7 +20,7 @@ public class GetAllMessageFromFriendsCommand implements Command {
     private static final Logger logger = Logger.getLogger(GetMyFriendsCommand.class);
 
     private final Receiver receiver;
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
     public GetAllMessageFromFriendsCommand(Receiver receiver) {
         this.receiver = receiver;
@@ -36,7 +37,10 @@ public class GetAllMessageFromFriendsCommand implements Command {
         List<User> userFriends = network.getUserFriends(token, network.getFriendsCount(token), 0);
         if (userFriends != null && userFriends.size() > 0) {
             for (int i = 0; i < userFriends.size(); i++) {
-                messages.addAll(network.getMessgaes(userFriends.get(i).getId(), id));
+                List<Message> msg = network.getMessgaes(userFriends.get(i).getId(), id);
+                if (msg != null) {
+                    messages.addAll(msg);
+                }
             }
         }
         messages.forEach(System.out::println);
