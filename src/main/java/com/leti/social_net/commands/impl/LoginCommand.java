@@ -2,7 +2,6 @@ package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.Receiver;
-import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
 

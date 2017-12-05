@@ -10,6 +10,7 @@ import com.leti.social_net.services.NetworkService;
 import com.leti.social_net.services.servicesImpl.NetworkPlaceholder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  */
 @org.springframework.context.annotation.Configuration
 @ComponentScan("com.leti.social_net")
+@EnableAspectJAutoProxy
 public class Configuration {
 
     @Bean
@@ -29,7 +31,7 @@ public class Configuration {
 
 
     @Bean
-    public ArrayList<Command> getDefaultMenu(Receiver receiver, DatabaseService databaseService, MessagesDao messagesDao, UserDao userDao)
+    public ArrayList<Command> getDefaultMenu(Receiver receiver, MessagesDao messagesDao, UserDao userDao)
     {
         ArrayList<Command> cmds = new ArrayList<>(10);
         cmds.add(new LoginCommand(receiver));

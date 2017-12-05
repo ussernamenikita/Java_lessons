@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class LoggingAspect {
     private static Logger logger = Logger.getLogger(LoggingAspect.class);
 
-    @Around("execution (* *.commands.impl.*.execute(..))")
+    @Around("execution(* com.leti.social_net.commands.impl.*.execute(..))")
     public Object logging(ProceedingJoinPoint point) throws Throwable {
         logger.info("Starting method "
                         +point.getSignature()
