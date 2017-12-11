@@ -6,12 +6,15 @@ import com.leti.social_net.models.User;
 import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Nikita on 21.11.2017.
  */
+@Service
 public class GetMyFriendsCommand implements Command {
 
     private static final Logger logger = Logger.getLogger(GetMyFriendsCommand.class);
@@ -19,6 +22,7 @@ public class GetMyFriendsCommand implements Command {
     private final Receiver receiver ;
     private List<User> userFriends;
 
+    @Autowired
     public GetMyFriendsCommand(Receiver receiver) {
         this.receiver = receiver;
     }

@@ -6,12 +6,15 @@ import com.leti.social_net.models.Message;
 import com.leti.social_net.models.Token;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Get messages from particular friend
  */
+@Service
 public class GetMessagesFromParticularFriendCommand implements Command{
     private static final Logger logger = Logger.getLogger(GetMessagesFromParticularFriendCommand.class);
 
@@ -22,6 +25,7 @@ public class GetMessagesFromParticularFriendCommand implements Command{
 
 
 
+    @Autowired
     public GetMessagesFromParticularFriendCommand(Receiver receiver) {
         this.receiver = receiver;
 

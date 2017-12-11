@@ -8,11 +8,13 @@ import com.leti.social_net.dao.UserDao;
 import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
 import com.leti.social_net.services.servicesImpl.NetworkPlaceholder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Spring configuration file
@@ -28,12 +30,13 @@ public class Configuration {
         return new NetworkPlaceholder();
     }
 
-
+    @Autowired
+    private List<Command> commandList;
 
     @Bean
-    public ArrayList<Command> getDefaultMenu(Receiver receiver, MessagesDao messagesDao, UserDao userDao)
+    public List<Command> getDefaultMenu(Receiver receiver, MessagesDao messagesDao, UserDao userDao)
     {
-        ArrayList<Command> cmds = new ArrayList<>(10);
+        /*ArrayList<Command> cmds = new ArrayList<>(10);
         cmds.add(new LoginCommand(receiver));
         cmds.add(new CreateUser(receiver,userDao));
         cmds.add(new AddToFriends(receiver,"10"));
@@ -42,6 +45,7 @@ public class Configuration {
         cmds.add(new GetMessagesFromParticularFriendCommand(receiver));
         cmds.add(new SendMessageToAllFriendsCommand(receiver,messagesDao));
         cmds.add(new SendMessageToParticularUserCommand(receiver,messagesDao));
-        return cmds;
+        return cmds;*/
+        return commandList;
     }
 }

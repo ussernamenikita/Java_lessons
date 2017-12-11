@@ -20,6 +20,15 @@ public class Receiver {
 
     Scanner scanner = new Scanner(System.in, "UTF-8");
 
+    String token = null;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @Autowired
     public Receiver(NetworkService networkService) {

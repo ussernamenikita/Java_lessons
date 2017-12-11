@@ -7,6 +7,8 @@ import com.leti.social_net.models.Token;
 import com.leti.social_net.models.User;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 /**
  * Get message from friends
  */
+@Service
 public class GetAllMessageFromFriendsCommand implements Command {
 
     private static final Logger logger = Logger.getLogger(GetMyFriendsCommand.class);
@@ -22,6 +25,7 @@ public class GetAllMessageFromFriendsCommand implements Command {
     private final Receiver receiver;
     private List<Message> messages = new ArrayList<>();
 
+    @Autowired
     public GetAllMessageFromFriendsCommand(Receiver receiver) {
         this.receiver = receiver;
 

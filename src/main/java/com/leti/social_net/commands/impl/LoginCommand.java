@@ -4,10 +4,13 @@ import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Login command
  */
+@Service
 public class LoginCommand  implements Command{
 
     private static final Logger logger = Logger.getLogger(LoginCommand.class);
@@ -15,6 +18,7 @@ public class LoginCommand  implements Command{
     private final Receiver receiver ;
     private String resultToken = null;
 
+    @Autowired
     public LoginCommand(Receiver receiver) {
         this.receiver = receiver;
 
@@ -38,6 +42,7 @@ public class LoginCommand  implements Command{
         if(resultToken != null)
         {
             System.out.println("Successful, your token is "+resultToken);
+            receiver.setToken(resultToken);
         }else
         {
             System.out.println("Can't login");

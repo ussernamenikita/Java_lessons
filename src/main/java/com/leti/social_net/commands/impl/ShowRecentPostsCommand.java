@@ -6,6 +6,8 @@ import com.leti.social_net.models.Post;
 import com.leti.social_net.services.NetworkService;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +15,7 @@ import java.util.Scanner;
 /**
  * Show posts command
  */
+@Service
 public class ShowRecentPostsCommand implements Command {
     private static final Logger logger = Logger.getLogger(ShowRecentPostsCommand.class);
 
@@ -20,6 +23,7 @@ public class ShowRecentPostsCommand implements Command {
     private final Receiver receiver;
     Scanner scanner = null;
 
+    @Autowired
     public ShowRecentPostsCommand(Receiver receiver) {
         this.receiver = receiver;
     }

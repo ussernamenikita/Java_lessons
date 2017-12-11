@@ -9,6 +9,8 @@ import com.leti.social_net.models.User;
 import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
 /**
  * Send message to all friends command
  */
+@Service
 public class SendMessageToAllFriendsCommand implements Command {
     private static final Logger logger = Logger.getLogger(SendMessageToAllFriendsCommand.class);
 
@@ -23,6 +26,7 @@ public class SendMessageToAllFriendsCommand implements Command {
     private final MessagesDao messagesDao;
 
 
+    @Autowired
     public SendMessageToAllFriendsCommand(Receiver receiver, MessagesDao messagesDao) {
         this.receiver = receiver;
         this.messagesDao = messagesDao;

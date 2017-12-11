@@ -20,10 +20,10 @@ import java.util.Scanner;
 @Service
 public class Menu {
     private final Invoker invoker;
-    private final ArrayList<Command> commands;
+    private final List<Command> commands;
 
     @Autowired
-    public Menu(Invoker invoker, ArrayList<Command> commands) {
+    public Menu(Invoker invoker, List<Command> commands) {
         this.invoker = invoker;
         this.commands = commands;
     }

@@ -4,11 +4,14 @@ import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 /**
  * Add user to friend
  */
+@Service
 public class AddToFriends implements Command {
 
     private final Receiver receiver ;
@@ -17,9 +20,11 @@ public class AddToFriends implements Command {
 
 
 
-    public AddToFriends(Receiver receiver, String token) {
+
+    @Autowired
+    public AddToFriends(Receiver receiver) {
         this.receiver = receiver;
-        this.token = token;
+        this.token = receiver.getToken();
     }
 
     @Override

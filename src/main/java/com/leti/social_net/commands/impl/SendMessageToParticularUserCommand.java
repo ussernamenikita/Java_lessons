@@ -8,10 +8,13 @@ import com.leti.social_net.models.Token;
 import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Send message to particular user
  */
+@Service
 public class SendMessageToParticularUserCommand implements Command {
     private static final Logger logger = Logger.getLogger(SendMessageToParticularUserCommand.class);
 
@@ -21,6 +24,7 @@ public class SendMessageToParticularUserCommand implements Command {
     private String token;
     private Integer userTo;
 
+    @Autowired
     public SendMessageToParticularUserCommand(Receiver receiver, MessagesDao messagesDao) {
         this.receiver = receiver;
         this.messagesDao = messagesDao;
