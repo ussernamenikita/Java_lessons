@@ -18,7 +18,7 @@ public interface UserDao {
     /**
      * Get user from database by id
      * @param id user  id
-     * @return UserDaoImpl with id
+     * @return User with id
      */
     User getParticularUser(Integer id);
 
@@ -32,6 +32,6 @@ public interface UserDao {
      * Insert or update one user
      * @param user user which need update or insert
      */
-    void insertOrUpdate(User user);
+    int insertOrUpdate(User user);
 
 }

@@ -1,29 +1,51 @@
 package com.leti.social_net.models;
 
+import javax.persistence.*;
+
 /**
  * Mwssage representation
  */
+@Entity
 public class Message {
+    @Id
+    @GeneratedValue
+    private Integer id;
 
-    private Integer userIdFrom;
-    private Integer userIdTo;
+
+    @ManyToOne()
+    private User userIdFrom;
+
+    @ManyToOne()
+    private User userIdTo;
+
     private String message;
+
     private Long sendTimestamp;
+
     private Long readTimestamp;
 
-    public Integer getUserIdFrom() {
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public User getUserIdFrom() {
         return userIdFrom;
     }
 
-    public void setUserIdFrom(Integer userIdFrom) {
+    public void setUserIdFrom(User userIdFrom) {
         this.userIdFrom = userIdFrom;
     }
 
-    public Integer getUserIdTo() {
+    public User getUserIdTo() {
         return userIdTo;
     }
 
-    public void setUserIdTo(Integer userIdTo) {
+    public void setUserIdTo(User userIdTo) {
         this.userIdTo = userIdTo;
     }
 

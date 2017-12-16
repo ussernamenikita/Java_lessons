@@ -36,7 +36,7 @@ public class LoginCommand  implements Command{
         if(login == null || password == null || login.isEmpty() || password.isEmpty())
         {
             logger.warn("Try login with null or empty login or password");
-            throw new IllegalArgumentException("UserDaoImpl and password can't be null or empty string!");
+            throw new IllegalArgumentException("Username and password can't be null or empty string!");
         }
         resultToken =  service.getToken(login,password);
         if(resultToken != null)

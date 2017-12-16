@@ -31,25 +31,25 @@ public class CreateUser implements Command{
     @Override
     public void execute() {
         logger.info("Execute create user command");
-        NetworkService service = receiver.getNetwork();
-        System.out.println("Input username");
-        String username = receiver.getScanner().next();
-        System.out.println("Input password");
-        String password = receiver.getScanner().next();
-        System.out.println("Input name");
-        String name = receiver.getScanner().next();
-        System.out.println("Input last name");
-        String lastname = receiver.getScanner().next();
-        User user = service.registerNewUser(username,password,name,lastname);
-        if(user != null)
-        {
-            logger.info("UserDaoImpl created with id "+user.getId());
+        try {
+            User user = new User();
+            System.out.println("Input username");
+            user.setUsername(receiver.getScanner().next());
+            System.out.println("Input password");
+            user.setPassword(receiver.getScanner().next());
+            System.out.println("Input name");
+            user.setName(receiver.getScanner().next());
+            System.out.println("Input last name");
+            user.setSurname(receiver.getScanner().next());
+            int newId = userDao.insertOrUpdate(user);
+            logger.info("user created with id " + newId);
             System.out.println("Successful create user");
-        }else {
-            logger.info("UserDaoImpl not created");
+        }catch (Exception e)
+        {
+            logger.info("user not created");
             System.out.println("Error while creating user");
+            e.printStackTrace();
         }
-        userDao.insertOrUpdate(user);
     }
 
     @Override

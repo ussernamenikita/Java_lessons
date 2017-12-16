@@ -1,12 +1,19 @@
 package com.leti.social_net.models;
 
+import javax.persistence.*;
+
 /**
  * Post representation
  */
+@Entity
 public class Post {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String title;
-    private Integer author;
+    @ManyToOne
+    @JoinColumn
+    private User author;
     private Integer mediaId;
     private String text;
     private Integer likeCount;
@@ -37,11 +44,11 @@ public class Post {
         this.title = title;
     }
 
-    public Integer getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(Integer author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

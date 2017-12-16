@@ -5,6 +5,7 @@ import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.dao.MessagesDao;
 import com.leti.social_net.models.Message;
 import com.leti.social_net.models.Token;
+import com.leti.social_net.models.User;
 import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
@@ -47,9 +48,13 @@ public class SendMessageToParticularUserCommand implements Command {
         msg.setMessage(message);
         //Time in seconds
         msg.setSendTimestamp(System.currentTimeMillis() / 1000);
-        msg.setUserIdFrom(userId);
+        User u = new User();
+        u.setId(userId);
+        msg.setUserIdFrom(u);
         System.out.println("Enter user id to send");
-        msg.setUserIdTo(userTo);
+        User u2 = new User();
+        u2.setId(userTo);
+        msg.setUserIdTo(u2);
         network.sendMessage(msg);
         messagesDao.putMessage(msg);
         logger.info("Message \"" + message + "\" sent to user with id="+userTo);

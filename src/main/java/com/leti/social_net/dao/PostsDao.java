@@ -1,6 +1,7 @@
 package com.leti.social_net.dao;
 
 import com.leti.social_net.models.Post;
+import com.leti.social_net.models.User;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListCell;
 
@@ -19,4 +20,6 @@ public interface PostsDao {
     List<Post> getAllPosts();
 
     List<Post> getPostsByUser(int userId);
+
+    List<Post> getRecentPosts(User user, long offset, int limit);
 }

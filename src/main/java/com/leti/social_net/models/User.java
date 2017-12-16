@@ -1,22 +1,43 @@
 package com.leti.social_net.models;
 
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
- * UserDaoImpl model class
+ * User model class
  */
+@Entity
 public class User {
-    private String registered;
-    private String address;
-    private String phone;
-    private String email;
-    private String birthday;
-    private String company;
-    private Boolean online;
-    private String avatar;
-    private String surname;
-    private String name;
+
+    @Id
+    @GeneratedValue
     private Integer id;
+
+    private String registered;
+
+    private String address;
+
+    private String phone;
+
+    private String email;
+
+    private String birthday;
+
+    private String company;
+
+    private Boolean online;
+
+    private String avatar;
+
+    private String surname;
+
+    private String name;
+
+    private String username;
+
+    private String password;
+
 
     public User() {
     }
@@ -175,4 +196,22 @@ public class User {
                 ", id=" + id +
                 '}';
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
 }

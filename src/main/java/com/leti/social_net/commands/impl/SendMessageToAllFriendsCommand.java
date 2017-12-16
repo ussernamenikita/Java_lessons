@@ -52,8 +52,10 @@ public class SendMessageToAllFriendsCommand implements Command {
                 msg.setMessage(localMsg);
                 //Time in seconds
                 msg.setSendTimestamp(System.currentTimeMillis()/1000);
-                msg.setUserIdFrom(Token.getIdFromToken(token));
-                msg.setUserIdTo(user.getId());
+                User u = new User();
+                u.setId(Token.getIdFromToken(token));
+                msg.setUserIdFrom(u);
+                msg.setUserIdTo(user);
                 //Save message to database
                 messagesDao.putMessage(msg);
                 network.sendMessage(msg);
