@@ -1,9 +1,11 @@
 package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
+import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.models.Message;
 import com.leti.social_net.models.Token;
+import com.leti.social_net.models.User;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +34,18 @@ public class GetMessagesFromParticularFriendCommand implements Command{
     }
 
     @Override
-    public void execute() {
-        System.out.println("Enter your token");
-        String token = receiver.getScanner().next();
+    public void execute() throws NotAuthorized {
+        String token = receiver.getToken();
+        if(token == null)
+        {
+            throw new NotAuthorized("This operation requires authorization");
+        }
         System.out.printf("Enter friend id");
         Integer friendId = receiver.getScanner().nextInt();
         logger.info("Try to get message from user with token "+token+" and user with id"+friendId);
-        Integer id = Token.getIdFromToken(token);
+        Integer id = Token.getIdFromToken(token,receiver.getNetwork());
+        User user = receiver.getNetwork().getUser(id);
+        User friend = receiver.getNetwork().getUser(friendId);
         if (id == null)
         {
             messages = null;
@@ -52,7 +59,7 @@ public class GetMessagesFromParticularFriendCommand implements Command{
             logger.warn("Invalid argument, this users is not a friends");
             return;
         }
-        messages = network.getMessgaes(id,friendId);
+        messages = network.getMessgaes(user,friend);
         logger.info("Received "+messages.size()+" messages");
         messages.forEach(System.out::println);
 

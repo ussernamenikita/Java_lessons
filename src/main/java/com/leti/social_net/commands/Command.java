@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
  * Command
  */
 public interface Command {
-    void execute();
+    void execute() throws NotAuthorized;
     String getName();
 }

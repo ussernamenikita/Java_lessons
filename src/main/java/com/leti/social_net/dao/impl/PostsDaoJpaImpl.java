@@ -40,14 +40,14 @@ public class PostsDaoJpaImpl implements PostsDao {
     @Override
     public List<Post> getPostsByUser(int userId) {
         return entityManager.createQuery("select p from Posts as p where p.author = ?",Post.class)
-                .setParameter(0,userId).getResultList();
+                .setParameter(1,userId).getResultList();
     }
 
     @Override
     public List<Post> getRecentPosts(User user, long offset, int limit) {
         return entityManager
                 .createQuery("select p from Post as p where p.author = ?",Post.class)
-                .setParameter(0,user)
+                .setParameter(1,user)
                 .setFirstResult((int)offset)
                 .setMaxResults(limit)
                 .getResultList();

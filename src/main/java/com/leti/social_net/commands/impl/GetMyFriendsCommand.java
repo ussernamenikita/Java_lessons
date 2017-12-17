@@ -1,6 +1,7 @@
 package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
+import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.models.User;
 import com.leti.social_net.services.DatabaseService;
@@ -28,10 +29,13 @@ public class GetMyFriendsCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws NotAuthorized {
         logger.info("Execute command get my user");
-        System.out.println("Enter your token");
-        String token = receiver.getScanner().next();
+        String token = receiver.getToken();
+        if(token == null)
+        {
+            throw new NotAuthorized("This operation requires authorization");
+        }
         NetworkService network = receiver.getNetwork();
         userFriends = network.getUserFriends(token,network.getFriendsCount(token),0);
         if(userFriends != null) {

@@ -1,6 +1,7 @@
 package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
+import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
@@ -28,12 +29,17 @@ public class AddToFriends implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws NotAuthorized {
         //TODO add log
         NetworkService networkService = receiver.getNetwork();
-        System.out.println("Enter the user id you want to add as a friend.");
-        System.out.println("-1 for exit");
+        String token = receiver.getToken();
+        if(token == null)
+        {
+            throw new NotAuthorized("This operation requires authorization");
+        }
         for (;;) {
+            System.out.println("Enter the user id you want to add as a friend.");
+            System.out.println("-1 for exit");
             int userId = receiver.getScanner().nextInt();
             if(userId == -1)
                 break;
@@ -41,8 +47,9 @@ public class AddToFriends implements Command {
             if(networkService.isFriends(token,userId))
             {
                 System.out.println("Successful");
-            }else
+            }else {
                 System.out.println("Can't add to friend");
+            }
         }
     }
 

@@ -41,4 +41,25 @@ public class UserDaoJpaImpl implements UserDao{
     public int insertOrUpdate(User user) {
         return entityManager.merge(user).getId();
     }
+
+    @Override
+    public User getUserByLoginAndPassword(String login, String password) {
+        List<User> list  =  entityManager.createQuery("from User u where u.username = ? and u.password = ?",User.class)
+                .setParameter(1,login)
+                .setParameter(2,password).getResultList();
+        if(list == null || list.size() < 1)
+            return null;
+        return list.get(0);
+    }
+
+    @Override
+    public User getUserByLogin(String username) {
+        List<User> users = entityManager
+                .createQuery("from User u where u.username = ?",User.class)
+                .setParameter(1,username).getResultList();
+        if(users == null || users.size() < 1)
+            return null;
+        else
+            return users.get(0);
+    }
 }

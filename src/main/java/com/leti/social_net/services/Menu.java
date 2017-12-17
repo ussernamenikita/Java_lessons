@@ -2,6 +2,7 @@ package com.leti.social_net.services;
 
 import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.Invoker;
+import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.commands.impl.*;
 import com.leti.social_net.services.DatabaseService;
@@ -28,7 +29,7 @@ public class Menu {
         this.commands = commands;
     }
 
-    public void showMenu() {
+    public void showMenu() throws NotAuthorized {
         try(Scanner scanner = new Scanner(System.in, "UTF-8")) {
             int i = 1;
             while (i != -1) {

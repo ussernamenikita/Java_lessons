@@ -30,6 +30,7 @@ public class Receiver {
         this.token = token;
     }
 
+
     @Autowired
     public Receiver(NetworkService networkService) {
         this.network = networkService;

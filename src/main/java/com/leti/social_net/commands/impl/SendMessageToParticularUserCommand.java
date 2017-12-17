@@ -1,12 +1,12 @@
 package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
+import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.dao.MessagesDao;
 import com.leti.social_net.models.Message;
 import com.leti.social_net.models.Token;
 import com.leti.social_net.models.User;
-import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,6 @@ public class SendMessageToParticularUserCommand implements Command {
     private final Receiver receiver;
     private final MessagesDao messagesDao;
     private String message;
-    private String token;
-    private Integer userTo;
 
     @Autowired
     public SendMessageToParticularUserCommand(Receiver receiver, MessagesDao messagesDao) {
@@ -32,14 +30,19 @@ public class SendMessageToParticularUserCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws NotAuthorized {
         logger.info("Execute send to particular user");
         NetworkService network = receiver.getNetwork();
-        System.out.println("Enter yout token");
-        token = receiver.getScanner().next();
-        Integer userId = Token.getIdFromToken(token);
-        if (userId == null) {
-            logger.error("Invalid token,can't send message");
+        String token = receiver.getToken();
+        if(token == null)
+        {
+            throw new NotAuthorized("This operation requires authorization");
+        }
+        Integer userId = Token.getIdFromToken(token,network);
+        System.out.printf("Enter friend id");
+        Integer friendId = receiver.getScanner().nextInt();
+        if (!receiver.getNetwork().isFriends(userId,friendId)) {
+            logger.error("Users are not friends");
             return;
         }
         System.out.println("Enter message");
@@ -48,16 +51,14 @@ public class SendMessageToParticularUserCommand implements Command {
         msg.setMessage(message);
         //Time in seconds
         msg.setSendTimestamp(System.currentTimeMillis() / 1000);
-        User u = new User();
-        u.setId(userId);
-        msg.setUserIdFrom(u);
+        User u = receiver.getNetwork().getUser(userId);
+        msg.setUseridfrom(u);
         System.out.println("Enter user id to send");
-        User u2 = new User();
-        u2.setId(userTo);
-        msg.setUserIdTo(u2);
+        User u2 = receiver.getNetwork().getUser(friendId);
+        msg.setUseridto(u2);
         network.sendMessage(msg);
         messagesDao.putMessage(msg);
-        logger.info("Message \"" + message + "\" sent to user with id="+userTo);
+        logger.info("Message \"" + message + "\" sent to user with id="+friendId);
     }
 
     @Override

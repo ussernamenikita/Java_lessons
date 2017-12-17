@@ -1,6 +1,7 @@
 package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
+import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.models.Message;
 import com.leti.social_net.models.Token;
@@ -32,16 +33,19 @@ public class GetAllMessageFromFriendsCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws NotAuthorized {
         logger.info("Execute command get messages from friends");
-        System.out.println("Enter your token");
-        String token = receiver.getScanner().next();
+        String token = receiver.getToken();
+        if(token == null)
+        {
+            throw new NotAuthorized("This operation requires authorization");
+        }
         NetworkService network = receiver.getNetwork();
-        Integer id = Token.getIdFromToken(token);
+        User user = receiver.getNetwork().getUser(Token.getIdFromToken(token,receiver.getNetwork()));
         List<User> userFriends = network.getUserFriends(token, network.getFriendsCount(token), 0);
         if (userFriends != null && userFriends.size() > 0) {
             for (int i = 0; i < userFriends.size(); i++) {
-                List<Message> msg = network.getMessgaes(userFriends.get(i).getId(), id);
+                List<Message> msg = network.getMessgaes(userFriends.get(i), user);
                 if (msg != null) {
                     messages.addAll(msg);
                 }

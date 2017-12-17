@@ -77,24 +77,6 @@ public class Configuration {
     }
 
 
-    @Autowired
-    private List<Command> commandList;
-
-    @Bean
-    public List<Command> getDefaultMenu()
-    {
-        /*ArrayList<Command> cmds = new ArrayList<>(10);
-        cmds.add(new LoginCommand(receiver));
-        cmds.add(new CreateUser(receiver,userDao));
-        cmds.add(new AddToFriends(receiver,"10"));
-        cmds.add(new GetMyFriendsCommand(receiver));
-        cmds.add(new GetAllMessageFromFriendsCommand(receiver));
-        cmds.add(new GetMessagesFromParticularFriendCommand(receiver));
-        cmds.add(new SendMessageToAllFriendsCommand(receiver,messagesDao));
-        cmds.add(new SendMessageToParticularUserCommand(receiver,messagesDao));
-        return cmds;*/
-        return commandList;
-    }
 
 
 

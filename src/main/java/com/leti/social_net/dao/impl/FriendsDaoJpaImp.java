@@ -31,8 +31,8 @@ public class FriendsDaoJpaImp implements FriendsDao {
     public List<User> getFriends(User u) {
         List<Friend> list = entityManager
                 .createQuery("select f from Friend as f where f.u1 = ? or f.u2 = ?",Friend.class)
-                .setParameter(0,u)
                 .setParameter(1,u)
+                .setParameter(2,u)
                 .getResultList();
         if(list == null)
             return new ArrayList<>();
@@ -41,6 +41,7 @@ public class FriendsDaoJpaImp implements FriendsDao {
                     .stream()
                     .flatMap(friend -> Stream.of(friend.getU1(),friend.getU2()))
                     .distinct()
+                    .filter(user -> !user.equals(u))
                     .collect(Collectors.toList());
     }
 
@@ -56,8 +57,8 @@ public class FriendsDaoJpaImp implements FriendsDao {
     public List<User> getFriends(User user, int limit, int offset) {
         List<Friend> list = entityManager
                 .createQuery("select f from Friend as f where f.u1 = ? or f.u2 = ?",Friend.class)
-                .setParameter(0,user)
                 .setParameter(1,user)
+                .setParameter(2,user)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
@@ -68,6 +69,7 @@ public class FriendsDaoJpaImp implements FriendsDao {
                     .stream()
                     .flatMap(friend -> Stream.of(friend.getU1(),friend.getU2()))
                     .distinct()
+                    .filter(user1 -> !user1.equals(user))
                     .collect(Collectors.toList());
     }
 }

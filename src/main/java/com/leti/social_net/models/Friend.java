@@ -4,18 +4,22 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(name = "friends")
 public class Friend {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "friends_gen")
+    @SequenceGenerator(name = "friends_gen",sequenceName = "friends_id_seq1")
     int id;
 
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "u1")
     User u1;
 
 
     @ManyToOne
+    @JoinColumn(name = "u2")
     User u2;
 
     public User getU1() {
@@ -32,5 +36,20 @@ public class Friend {
 
     public void setU2(User u2) {
         this.u2 = u2;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Friend friend = (Friend) o;
+
+        return id == friend.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

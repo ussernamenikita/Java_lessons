@@ -1,6 +1,7 @@
 package com.leti.social_net.commands.impl;
 
 import com.leti.social_net.commands.Command;
+import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.models.Post;
 import com.leti.social_net.services.NetworkService;
@@ -29,10 +30,11 @@ public class ShowRecentPostsCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws NotAuthorized {
         NetworkService service = receiver.getNetwork();
-        System.out.printf("Enter your token");
-        String token= receiver.getScanner().next();
+        String token= receiver.getToken();
+        if(token == null)
+            throw new NotAuthorized("This operation requires authorization");
         scanner = receiver.getScanner();
         if(token == null)
         {

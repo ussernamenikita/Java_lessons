@@ -110,9 +110,15 @@ public interface NetworkService {
     /**
      * Get all messages from user with id userTo,
      * sent to user with id equals userFrom
-     * @param userTo user id to
-     * @param userFrom user id from
+     * @param userTo user  to
+     * @param userFrom user  from
      * @return all messages from userFrom to userTo
      */
-    List<Message> getMessgaes(Integer userTo,Integer userFrom);
+    List<Message> getMessgaes(User userTo,User userFrom);
+
+    User getUserByLoginAndPassword(String login , String password);
+
+    boolean userExist(String username);
+
+    User getUser(Integer id);
 }

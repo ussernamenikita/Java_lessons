@@ -14,8 +14,7 @@ public class Invoker {
         this.command = command;
     }
 
-    public void run()
-    {
+    public void run() throws NotAuthorized {
         command.execute();
     }
 

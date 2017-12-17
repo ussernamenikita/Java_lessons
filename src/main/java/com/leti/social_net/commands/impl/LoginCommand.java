@@ -41,11 +41,10 @@ public class LoginCommand  implements Command{
         resultToken =  service.getToken(login,password);
         if(resultToken != null)
         {
-            System.out.println("Successful, your token is "+resultToken);
             receiver.setToken(resultToken);
         }else
         {
-            System.out.println("Can't login");
+            System.out.println("Invalid username or password");
         }
         logger.info("login command "+(resultToken!= null ? " success ": " fail "));
     }

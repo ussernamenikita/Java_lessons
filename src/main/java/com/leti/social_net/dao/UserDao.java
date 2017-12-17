@@ -34,4 +34,8 @@ public interface UserDao {
      */
     int insertOrUpdate(User user);
 
+    User getUserByLoginAndPassword(String login,String password);
+
+
+    User getUserByLogin(String username);
 }

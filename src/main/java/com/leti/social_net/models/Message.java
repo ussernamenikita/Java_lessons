@@ -3,20 +3,25 @@ package com.leti.social_net.models;
 import javax.persistence.*;
 
 /**
- * Mwssage representation
+ * Message representation
  */
 @Entity
+@Table(name = "messages")
 public class Message {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "messages_id_gen")
+    @SequenceGenerator(name = "messages_id_gen",sequenceName = "messages_id_seq")
     private Integer id;
 
 
     @ManyToOne()
-    private User userIdFrom;
+    @JoinColumn(name = "useridfrom")
+    private User useridfrom;
 
     @ManyToOne()
-    private User userIdTo;
+    @JoinColumn(name = "useridto")
+    private User useridto;
 
     private String message;
 
@@ -33,20 +38,20 @@ public class Message {
         this.id = id;
     }
 
-    public User getUserIdFrom() {
-        return userIdFrom;
+    public User getUseridfrom() {
+        return useridfrom;
     }
 
-    public void setUserIdFrom(User userIdFrom) {
-        this.userIdFrom = userIdFrom;
+    public void setUseridfrom(User useridfrom) {
+        this.useridfrom = useridfrom;
     }
 
-    public User getUserIdTo() {
-        return userIdTo;
+    public User getUseridto() {
+        return useridto;
     }
 
-    public void setUserIdTo(User userIdTo) {
-        this.userIdTo = userIdTo;
+    public void setUseridto(User useridto) {
+        this.useridto = useridto;
     }
 
     public String getMessage() {
@@ -76,8 +81,8 @@ public class Message {
     @Override
     public String toString() {
         return "Message{" +
-                "userIdFrom=" + userIdFrom +
-                ", userIdTo=" + userIdTo +
+                "useridfrom=" + useridfrom +
+                ", useridto=" + useridto +
                 ", message='" + message + '\'' +
                 ", sendTimestamp=" + sendTimestamp +
                 ", readTimestamp=" + readTimestamp +

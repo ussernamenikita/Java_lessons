@@ -1,17 +1,18 @@
 package com.leti.social_net.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * User model class
  */
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue
+    //@GeneratedValue(strategy = GenerationType.TABLE ,generator = "SEQ_USER_ID_GEN")
+    @GeneratedValue(strategy = GenerationType.TABLE ,generator = "SEQ_USER_ID_GEN")
+    @SequenceGenerator(name = "SEQ_USER_ID_GEN",sequenceName = "users_id_seq")
     private Integer id;
 
     private String registered;

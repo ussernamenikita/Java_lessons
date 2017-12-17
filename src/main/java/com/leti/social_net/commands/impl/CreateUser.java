@@ -8,6 +8,9 @@ import com.leti.social_net.services.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -32,18 +35,36 @@ public class CreateUser implements Command{
     public void execute() {
         logger.info("Execute create user command");
         try {
-            User user = new User();
-            System.out.println("Input username");
-            user.setUsername(receiver.getScanner().next());
-            System.out.println("Input password");
-            user.setPassword(receiver.getScanner().next());
-            System.out.println("Input name");
-            user.setName(receiver.getScanner().next());
-            System.out.println("Input last name");
-            user.setSurname(receiver.getScanner().next());
-            int newId = userDao.insertOrUpdate(user);
-            logger.info("user created with id " + newId);
-            System.out.println("Successful create user");
+            while (true) {
+                User user = new User();
+                System.out.println("Input username");
+                String username = receiver.getScanner().next();
+                if(receiver.getNetwork().userExist(username))
+                {
+                    System.out.println("User with username "+username+" already exists");
+                    continue;
+                }
+                user.setUsername(username);
+                System.out.println("Input password");
+                user.setPassword(receiver.getScanner().next());
+                System.out.println("Input name");
+                user.setName(receiver.getScanner().next());
+                System.out.println("Input last name");
+                user.setSurname(receiver.getScanner().next());
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date(System.currentTimeMillis());
+                user.setRegistered(dateFormat.format(date));
+                int newId = Integer.MIN_VALUE;
+                try {
+                    newId = userDao.insertOrUpdate(user);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+                }
+                logger.info("user created with id " + newId);
+                System.out.println("Successful create user");
+                break;
+            }
         }catch (Exception e)
         {
             logger.info("user not created");

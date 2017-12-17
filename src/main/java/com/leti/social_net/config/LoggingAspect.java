@@ -1,6 +1,7 @@
 package com.leti.social_net.config;
 
 
+import com.leti.social_net.commands.NotAuthorized;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -25,8 +26,13 @@ public class LoggingAspect {
                         +point.getTarget()
                         +" with arguments "
                         +Arrays.toString(point.getArgs()));
-        Object result = point.proceed();
-
+        Object result = null;
+        try {
+           result = point.proceed();
+        }catch (NotAuthorized notAuthorized)
+        {
+            System.out.println(notAuthorized.getMessage());
+        }
         logger.info("The result "+result);
         return result;
     }
