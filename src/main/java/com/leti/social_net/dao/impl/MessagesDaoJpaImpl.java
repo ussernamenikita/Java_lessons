@@ -11,13 +11,17 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * Created by Nikita on 12.12.2017.
+ * Messgaes DAO implementation
+ * with JPA and Hibernate
  */
 @Transactional
 @Repository
 public class MessagesDaoJpaImpl implements MessagesDao {
 
 
+    /**
+     * Entity manager uses for connection with database
+     */
     @PersistenceContext
     EntityManager entityManager;
 

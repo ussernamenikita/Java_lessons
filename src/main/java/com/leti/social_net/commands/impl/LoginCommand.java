@@ -9,19 +9,30 @@ import org.springframework.stereotype.Service;
 
 /**
  * Login command
+ * Ask user username and password
+ * and save user token in variable if success
  */
 @Service
 public class LoginCommand  implements Command{
 
+    /**
+     * Standard logger
+     */
     private static final Logger logger = Logger.getLogger(LoginCommand.class);
 
+    /**
+     * Receiver instance
+     */
     private final Receiver receiver ;
+
+    /**
+     * Received token
+     */
     private String resultToken = null;
 
     @Autowired
     public LoginCommand(Receiver receiver) {
         this.receiver = receiver;
-
     }
 
 

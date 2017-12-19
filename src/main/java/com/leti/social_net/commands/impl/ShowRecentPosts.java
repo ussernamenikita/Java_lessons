@@ -14,15 +14,26 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by Nikita on 19.12.2017.
+ * Show recent posts
+ * show all posts
  */
 @Service
 public class ShowRecentPosts implements Command {
 
-    private static final Logger logger = Logger.getLogger(ShowMyRecentPostsCommand.class);
+    /**
+     * Standard logger
+     */
+    private static final Logger logger = Logger.getLogger(ShowRecentPosts.class);
 
 
+    /**
+     * Receiver instance
+     */
     private final Receiver receiver;
+
+    /**
+     * Scanner reference
+     */
     Scanner scanner = null;
 
     @Autowired
@@ -40,24 +51,24 @@ public class ShowRecentPosts implements Command {
             Pair<Long, List<Post>> requests = service.getRecentPosts(offset,10);
             offset = requests.getKey();
             List<Post> posts = requests.getValue();
-            for(Post p: posts)
-            {
-                System.out.println(p);
-            }
-            if(posts.size() < 10)
-            {
-                System.out.println("All posts viewed");
-                break;
-            }else {
-                int response = -1;
-                while (response < 1 || response > 2) {
-                    System.out.println("Show next page ?");
-                    System.out.println("1 - yes 2 - no");
-                    response = scanner.nextInt();
+            logger.debug("Page number "+i+", get "+(posts != null ? posts.size(): 0)+" posts");
+            if(posts != null) {
+                for (Post p : posts) {
+                    System.out.println(p);
                 }
-                if(response == 2)
-                {
+                if (posts.size() < 10) {
+                    System.out.println("All posts viewed");
                     break;
+                } else {
+                    int response = -1;
+                    while (response < 1 || response > 2) {
+                        System.out.println("Show next page ?");
+                        System.out.println("1 - yes 2 - no");
+                        response = scanner.nextInt();
+                    }
+                    if (response == 2) {
+                        break;
+                    }
                 }
             }
         }

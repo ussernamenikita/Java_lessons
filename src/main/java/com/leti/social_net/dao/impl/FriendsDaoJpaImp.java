@@ -3,20 +3,19 @@ package com.leti.social_net.dao.impl;
 import com.leti.social_net.dao.FriendsDao;
 import com.leti.social_net.models.Friend;
 import com.leti.social_net.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Created by Nikita on 13.12.2017.
+ * Friends DAO implementation
+ * ith JPA and Hibernate
  */
 @Transactional
 @Repository

@@ -2,8 +2,8 @@ package com.leti.social_net.models;
 
 import com.leti.social_net.dao.UserDao;
 import com.leti.social_net.services.NetworkService;
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
 
 import java.util.HashMap;
 import java.util.Set;

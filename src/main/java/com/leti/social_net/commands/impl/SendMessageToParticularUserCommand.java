@@ -14,19 +14,28 @@ import org.springframework.stereotype.Service;
 
 /**
  * Send message to particular user
+ * add user id and send message to him
  */
 @Service
 public class SendMessageToParticularUserCommand implements Command {
+    /**
+     * Standrd logger
+     */
     private static final Logger logger = Logger.getLogger(SendMessageToParticularUserCommand.class);
 
+    /**
+     * Receiver instance
+     */
     private final Receiver receiver;
-    private final MessagesDao messagesDao;
+
+    /**
+     * Message which will be send
+     */
     private String message;
 
     @Autowired
-    public SendMessageToParticularUserCommand(Receiver receiver, MessagesDao messagesDao) {
+    public SendMessageToParticularUserCommand(Receiver receiver) {
         this.receiver = receiver;
-        this.messagesDao = messagesDao;
     }
 
     @Override
@@ -57,7 +66,6 @@ public class SendMessageToParticularUserCommand implements Command {
         User u2 = receiver.getNetwork().getUser(friendId);
         msg.setUseridto(u2);
         network.sendMessage(msg);
-        messagesDao.putMessage(msg);
         logger.info("Message \"" + message + "\" sent to user with id="+friendId);
     }
 

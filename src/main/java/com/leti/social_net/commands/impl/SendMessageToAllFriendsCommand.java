@@ -3,7 +3,6 @@ package com.leti.social_net.commands.impl;
 import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
-import com.leti.social_net.dao.MessagesDao;
 import com.leti.social_net.models.Message;
 import com.leti.social_net.models.Token;
 import com.leti.social_net.models.User;
@@ -16,12 +15,20 @@ import java.util.List;
 
 
 /**
- * Send message to all friends command
+ * Send message to
+ * all logged user's friends
  */
 @Service
 public class SendMessageToAllFriendsCommand implements Command {
+
+    /**
+     * Standard logger
+     */
     private static final Logger logger = Logger.getLogger(SendMessageToAllFriendsCommand.class);
 
+    /**
+     * Receiver instance
+     */
     private final Receiver receiver ;
 
 

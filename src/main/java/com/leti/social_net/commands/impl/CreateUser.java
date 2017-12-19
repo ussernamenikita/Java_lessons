@@ -19,15 +19,20 @@ import java.util.Date;
  */
 @Service
 public class CreateUser implements Command{
+
+    /**
+     * Standard logger
+     */
     private static final Logger logger = Logger.getLogger(CreateUser.class.getSimpleName());
 
+    /**
+     * Receiver instance
+     */
     private final Receiver receiver ;
-    private final UserDao userDao;
 
     @Autowired
-    public CreateUser(Receiver receiver, UserDao userDao) {
+    public CreateUser(Receiver receiver) {
         this.receiver = receiver;
-        this.userDao = userDao;
     }
 
 
@@ -42,7 +47,7 @@ public class CreateUser implements Command{
                 if(receiver.getNetwork().userExist(username))
                 {
                     System.out.println("User with username "+username+" already exists");
-                    continue;
+                    return;
                 }
                 user.setUsername(username);
                 System.out.println("Input password");
@@ -56,7 +61,7 @@ public class CreateUser implements Command{
                 user.setRegistered(dateFormat.format(date));
                 int newId = Integer.MIN_VALUE;
                 try {
-                    newId = userDao.insertOrUpdate(user);
+                    newId = receiver.getNetwork().addUser(user);
                 } catch (Exception e) {
                     e.printStackTrace();
                     break;

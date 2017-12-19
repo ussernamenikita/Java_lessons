@@ -11,36 +11,22 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * Created by Nikita on 12.12.2017.
+ * Posts DAO implementation
+ * with JPA and Hibernate
  */
 @Repository
 @Transactional
 public class PostsDaoJpaImpl implements PostsDao {
 
+    /**
+     * Entity manager uses for connection with database
+     */
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
     public void insertPost(Post post) {
         entityManager.merge(post);
-    }
-
-    @Override
-    public void insertPosts(List<Post> postsList) {
-        entityManager.getTransaction();
-        postsList.forEach(this::insertPost);
-        entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public List<Post> getAllPosts() {
-        return entityManager.createQuery("select p from Post p",Post.class).getResultList();
-    }
-
-    @Override
-    public List<Post> getPostsByUser(User user) {
-        return entityManager.createQuery("from Post as p where p.author = ?",Post.class)
-                .setParameter(1,user).getResultList();
     }
 
     @Override

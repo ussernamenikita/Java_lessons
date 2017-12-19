@@ -3,19 +3,29 @@ package com.leti.social_net.commands.impl;
 import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.NotAuthorized;
 import com.leti.social_net.commands.Receiver;
-import com.leti.social_net.services.DatabaseService;
 import com.leti.social_net.services.NetworkService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 /**
  * Add user to friend
+ * if user already friend do nothing
  */
 @Service
 public class AddToFriends implements Command {
 
+    Logger logger = Logger.getLogger(AddToFriends.class);
+
+    /**
+     * Receiver instance
+     */
     private final Receiver receiver ;
+
+    /**
+     * Token of logged user
+     */
     private String token;
 
 
@@ -30,7 +40,6 @@ public class AddToFriends implements Command {
 
     @Override
     public void execute() throws NotAuthorized {
-        //TODO add log
         NetworkService networkService = receiver.getNetwork();
         String token = receiver.getToken();
         if(token == null)
@@ -46,8 +55,10 @@ public class AddToFriends implements Command {
             networkService.addUserToFriend(token,userId);
             if(networkService.isFriends(token,userId))
             {
+                logger.debug("Friend added successful");
                 System.out.println("Successful");
             }else {
+                logger.debug("Can't add to friend");
                 System.out.println("Can't add to friend");
             }
         }

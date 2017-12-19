@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -30,19 +31,25 @@ public class Menu {
     }
 
     public void showMenu() throws NotAuthorized {
-        try(Scanner scanner = new Scanner(System.in, "UTF-8")) {
+            Scanner scanner = new Scanner(System.in, "UTF-8");
             int i = 1;
             while (i != -1) {
                 for (int j = 0; j < commands.size(); j++) {
                     System.out.println(j + ":" + commands.get(j).getName());
                 }
-                i = scanner.nextInt();
+                System.out.println("-1: exit");
+                try {
+                    i = scanner.nextInt();
+                }catch (NoSuchElementException e)
+                {
+                    scanner.next();
+                    continue;
+                }
                 if (i >= 0 && i < commands.size()) {
                     invoker.setCommand(commands.get(i));
                     invoker.run();
                 }
             }
-        }
     }
 
 

@@ -2,12 +2,12 @@ package com.leti.social_net.dao;
 
 import com.leti.social_net.models.Message;
 import com.leti.social_net.models.User;
-import javafx.scene.control.ListCell;
 
 import java.util.List;
 
 /**
  * DAO for messages
+ * ...
  */
 public interface MessagesDao{
 

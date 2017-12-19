@@ -14,15 +14,27 @@ import org.springframework.stereotype.Service;
 import java.util.Scanner;
 
 /**
- * Created by Nikita on 19.12.2017.
+ * Add post with logged user author.
+ * user must be logged in
  */
 @Service
 public class AddPost implements Command {
 
-    private static final Logger logger = Logger.getLogger(ShowMyRecentPostsCommand.class);
+    /**
+     * Standard logger
+     */
+    private static final Logger logger = Logger.getLogger(AddPost.class);
 
+    /**
+     * Receiver hold network
+     * and scanner
+     */
     @Autowired
     private Receiver receiver;
+
+    /**
+     * Scanner local ref
+     */
     Scanner scanner = null;
 
     @Override
@@ -35,6 +47,10 @@ public class AddPost implements Command {
         User author = receiver.getNetwork().getUser(Token.getIdFromToken(token,receiver.getNetwork()));
         Post post = new Post();
         System.out.println("Title :");
+        if(scanner.hasNextLine())
+        {
+            scanner.nextLine();
+        }
         post.setTitle(scanner.nextLine());
         System.out.println("Text :");
         post.setText(scanner.nextLine());

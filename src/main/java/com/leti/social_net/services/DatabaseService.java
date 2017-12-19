@@ -1,7 +1,7 @@
 package com.leti.social_net.services;
 
 import com.leti.social_net.models.User;
-import com.sun.istack.internal.NotNull;
+import com.sun.istack.NotNull;
 
 import java.util.List;
 

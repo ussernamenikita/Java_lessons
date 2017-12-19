@@ -2,20 +2,31 @@ package com.leti.social_net.dao.impl;
 
 import com.leti.social_net.dao.UserDao;
 import com.leti.social_net.models.User;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * Created by Nikita on 12.12.2017.
+ * User DAO implementation
+ * with JPA and Hibernate
  */
 @Repository
 @Transactional
 public class UserDaoJpaImpl implements UserDao{
 
+    /**
+     * Standard logger
+     */
+    Logger logger = Logger.getLogger(UserDaoJpaImpl.class);
+
+    /**
+     * Entity manager uses for connection with database
+     */
     @PersistenceContext
     EntityManager entityManager;
 
@@ -31,14 +42,29 @@ public class UserDaoJpaImpl implements UserDao{
     }
 
     @Override
+    @Transactional
     public void insertOrUpdate(List<User> user) {
-        entityManager.getTransaction();
+        if(user == null)
+            return;
         user.forEach(entityManager::merge);
-        entityManager.getTransaction().commit();
     }
 
     @Override
     public int insertOrUpdate(User user) {
+        User tmp = null;
+        if(user.getId() == null) {
+            try {
+                tmp = entityManager.createQuery("from User u where u.username = ?", User.class)
+                        .setParameter(1, user.getUsername()).getSingleResult();
+            }catch (NoResultException e)
+            {
+                logger.debug("No users with username "+user.getUsername()+" was fined");
+            }
+            if(tmp != null)
+            {
+                user.setId(tmp.getId());
+            }
+        }
         return entityManager.merge(user).getId();
     }
 

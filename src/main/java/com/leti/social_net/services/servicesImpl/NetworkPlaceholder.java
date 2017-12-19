@@ -1,7 +1,5 @@
 package com.leti.social_net.services.servicesImpl;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.leti.social_net.dao.FriendsDao;
 import com.leti.social_net.dao.MessagesDao;
 import com.leti.social_net.dao.PostsDao;
@@ -16,23 +14,18 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Network imitation
+ * Interface implementation
+ * for work with network
  */
 @Service
 public class NetworkPlaceholder implements NetworkService {
 
-
-
-
-
-
+    /**
+     * Standard logger
+     */
     private static Logger Log = Logger.getLogger(NetworkPlaceholder.class);
 
 
@@ -101,7 +94,7 @@ public class NetworkPlaceholder implements NetworkService {
         List<Post> posts = postsDao.getRecentPosts(user,offset,limit);
         Long newV = (long) (posts != null ? posts.size() : 0);
         newV= newV+offset-1;
-        return new Pair<Long,List<Post>>(newV,posts) ;
+        return new Pair<>(newV, posts) ;
     }
 
     @Override
@@ -181,6 +174,11 @@ public class NetworkPlaceholder implements NetworkService {
     @Override
     public void post(Post post) {
         postsDao.insertPost(post);
+    }
+
+    @Override
+    public int addUser(User user) {
+        return userDao.insertOrUpdate(user);
     }
 
 

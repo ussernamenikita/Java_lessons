@@ -16,14 +16,25 @@ import java.util.List;
 
 
 /**
- * Get message from friends
+ * Get message from friends.
+ * Output messages to console
  */
 @Service
 public class GetAllMessageFromFriendsCommand implements Command {
 
+    /**
+     * Standard logger
+     */
     private static final Logger logger = Logger.getLogger(GetMyFriendsCommand.class);
 
+    /**
+     * Receiver reference
+     */
     private final Receiver receiver;
+
+    /**
+     * Received messages
+     */
     private List<Message> messages = new ArrayList<>();
 
     @Autowired

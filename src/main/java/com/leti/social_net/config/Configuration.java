@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * Spring configuration file
+ * ...
  */
 @org.springframework.context.annotation.Configuration
 @ComponentScan("com.leti.social_net")

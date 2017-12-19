@@ -5,7 +5,8 @@ import com.leti.social_net.models.User;
 import java.util.List;
 
 /**
- * Dao for {@link com.leti.social_net.models.User}
+ * Dao for
+ * {@link com.leti.social_net.models.User}
  */
 public interface UserDao {
 
@@ -34,8 +35,19 @@ public interface UserDao {
      */
     int insertOrUpdate(User user);
 
+    /**
+     * Get user with username and password
+     * @param login username
+     * @param password password
+     * @return user if exists,or null if not exists
+     */
     User getUserByLoginAndPassword(String login,String password);
 
 
+    /**
+     * Get user with such username
+     * @param username username
+     * @return user if exists, null otherwise
+     */
     User getUserByLogin(String username);
 }

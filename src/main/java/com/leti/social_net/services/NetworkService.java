@@ -1,8 +1,8 @@
 package com.leti.social_net.services;
 
 import com.leti.social_net.models.*;
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
 import javafx.util.Pair;
 
 import java.util.List;
@@ -131,11 +131,38 @@ public interface NetworkService {
      */
     List<Message> getMessgaes(User userTo,User userFrom);
 
+    /**
+     * Get user instance wit specify login and password
+     * @param login username of user
+     * @param password password of user
+     * @return return user or null, if user don't exists
+     */
     User getUserByLoginAndPassword(String login , String password);
 
+    /**
+     * Check if user registered in social network
+     * @param username username of user
+     * @return true if such user exists , fals if not
+     */
     boolean userExist(String username);
 
+    /**
+     * Get user by id
+     * @param id user id
+     * @return return user with id
+     */
     User getUser(Integer id);
 
+    /**
+     * Send post to social network
+     * @param post new post
+     */
     void post(Post post);
+
+    /**
+     * Add new user to social network
+     * @param user new user
+     * @return new user id
+     */
+    int addUser(User user);
 }

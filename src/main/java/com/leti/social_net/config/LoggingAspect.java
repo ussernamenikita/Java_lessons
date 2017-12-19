@@ -12,12 +12,23 @@ import java.util.Arrays;
 
 /**
  * Aspect usage
+ * For all comands output to console function name and parameters
  */
 @Aspect
 @Component
 public class LoggingAspect {
+
+    /**
+     * Standrd logger
+     */
     private static Logger logger = Logger.getLogger(LoggingAspect.class);
 
+    /**
+     * Logging function
+     * @param point join point
+     * @return result object
+     * @throws Throwable error
+     */
     @Around("execution(* com.leti.social_net.commands.impl.*.execute(..))")
     public Object logging(ProceedingJoinPoint point) throws Throwable {
         logger.info("Starting method "

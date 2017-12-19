@@ -14,18 +14,26 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Get messages from particular friend
+ * Get messages from particular friend.
+ * Output messges to console
  */
 @Service
 public class GetMessagesFromParticularFriendCommand implements Command{
+
+    /**
+     * Standard logger
+     */
     private static final Logger logger = Logger.getLogger(GetMessagesFromParticularFriendCommand.class);
 
+    /**
+     * Receiver reference
+     */
     private final Receiver receiver;
+
+    /**
+     * Received messages
+     */
     private List<Message> messages;
-
-
-
-
 
     @Autowired
     public GetMessagesFromParticularFriendCommand(Receiver receiver) {
