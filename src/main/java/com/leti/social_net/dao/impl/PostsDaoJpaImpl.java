@@ -22,7 +22,7 @@ public class PostsDaoJpaImpl implements PostsDao {
 
     @Override
     public void insertPost(Post post) {
-        entityManager.persist(post);
+        entityManager.merge(post);
     }
 
     @Override
@@ -38,17 +38,26 @@ public class PostsDaoJpaImpl implements PostsDao {
     }
 
     @Override
-    public List<Post> getPostsByUser(int userId) {
-        return entityManager.createQuery("select p from Posts as p where p.author = ?",Post.class)
-                .setParameter(1,userId).getResultList();
+    public List<Post> getPostsByUser(User user) {
+        return entityManager.createQuery("from Post as p where p.author = ?",Post.class)
+                .setParameter(1,user).getResultList();
     }
 
     @Override
     public List<Post> getRecentPosts(User user, long offset, int limit) {
         return entityManager
-                .createQuery("select p from Post as p where p.author = ?",Post.class)
+                .createQuery("from Post as p where p.author = ?",Post.class)
+                .setFirstResult((int) offset)
+                .setMaxResults(limit)
                 .setParameter(1,user)
-                .setFirstResult((int)offset)
+                .getResultList();
+    }
+
+    @Override
+    public List<Post> getRecentPosts(long offset, int limit) {
+        return entityManager
+                .createQuery("from Post",Post.class)
+                .setFirstResult((int) offset)
                 .setMaxResults(limit)
                 .getResultList();
     }

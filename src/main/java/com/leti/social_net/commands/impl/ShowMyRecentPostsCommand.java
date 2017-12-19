@@ -17,15 +17,15 @@ import java.util.Scanner;
  * Show posts command
  */
 @Service
-public class ShowRecentPostsCommand implements Command {
-    private static final Logger logger = Logger.getLogger(ShowRecentPostsCommand.class);
+public class ShowMyRecentPostsCommand implements Command {
+    private static final Logger logger = Logger.getLogger(ShowMyRecentPostsCommand.class);
 
 
     private final Receiver receiver;
     Scanner scanner = null;
 
     @Autowired
-    public ShowRecentPostsCommand(Receiver receiver) {
+    public ShowMyRecentPostsCommand(Receiver receiver) {
         this.receiver = receiver;
     }
 
@@ -36,14 +36,10 @@ public class ShowRecentPostsCommand implements Command {
         if(token == null)
             throw new NotAuthorized("This operation requires authorization");
         scanner = receiver.getScanner();
-        if(token == null)
-        {
-
-        }
         Long offset = 0L;
         for (int i = 0;;i++) {
             System.out.println("Posts, page "+i);
-            Pair<Long, List<Post>> requests = service.getRecentPosts(token,0,10);
+            Pair<Long, List<Post>> requests = service.getMyRecentPosts(token,offset,10);
             offset = requests.getKey();
             List<Post> posts = requests.getValue();
             for(Post p: posts)
@@ -66,13 +62,11 @@ public class ShowRecentPostsCommand implements Command {
                     break;
                 }
             }
-
         }
-
     }
 
     @Override
     public String getName() {
-        return "Get recent posts";
+        return "Get my recent posts";
     }
 }

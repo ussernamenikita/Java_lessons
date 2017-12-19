@@ -19,7 +19,9 @@ public interface PostsDao {
 
     List<Post> getAllPosts();
 
-    List<Post> getPostsByUser(int userId);
+    List<Post> getPostsByUser(User user);
 
     List<Post> getRecentPosts(User user, long offset, int limit);
+
+    List<Post> getRecentPosts(long offset,int limit);
 }

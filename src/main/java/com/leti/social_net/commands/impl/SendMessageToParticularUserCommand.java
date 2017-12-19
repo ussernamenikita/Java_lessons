@@ -46,7 +46,7 @@ public class SendMessageToParticularUserCommand implements Command {
             return;
         }
         System.out.println("Enter message");
-        message = receiver.getScanner().next();
+        message = receiver.getScanner().nextLine();
         Message msg = new Message();
         msg.setMessage(message);
         //Time in seconds

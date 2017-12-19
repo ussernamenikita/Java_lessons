@@ -1,5 +1,7 @@
 package com.leti.social_net.services.servicesImpl;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.leti.social_net.dao.FriendsDao;
 import com.leti.social_net.dao.MessagesDao;
 import com.leti.social_net.dao.PostsDao;
@@ -14,6 +16,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +27,10 @@ import java.util.List;
  */
 @Service
 public class NetworkPlaceholder implements NetworkService {
+
+
+
+
 
 
     private static Logger Log = Logger.getLogger(NetworkPlaceholder.class);
@@ -67,25 +77,36 @@ public class NetworkPlaceholder implements NetworkService {
 
     @Override
     public void addUserToFriend(String token, int userId) {
-        User newFriend = findUserById(userId);
         Integer i = Token.getIdFromToken(token,this);
         if(i == null) {
             return;
         }
+        if(isFriends(i,userId))
+        {
+            return;
+        }
         User currentUser = findUserById(i);
+        User newFriend = findUserById(userId);
         if (currentUser != null && newFriend != null) {
             friendsDao.addFriends(currentUser,newFriend);
         }
     }
 
     @Override
-    public Pair<Long, List<Post>> getRecentPosts(String token, long offset, int limit) {
+    public Pair<Long, List<Post>> getMyRecentPosts(String token, long offset, int limit) {
         Integer id = Token.getIdFromToken(token,this);;
         if(id == null)
             return null;
-        User user = new User();
-        user.setId(id);
+        User user = userDao.getParticularUser(id);
         List<Post> posts = postsDao.getRecentPosts(user,offset,limit);
+        Long newV = (long) (posts != null ? posts.size() : 0);
+        newV= newV+offset-1;
+        return new Pair<Long,List<Post>>(newV,posts) ;
+    }
+
+    @Override
+    public Pair<Long, List<Post>> getRecentPosts(long offset, int limit) {
+        List<Post> posts = postsDao.getRecentPosts(offset,limit);
         Long newV = (long) (posts != null ? posts.size() : 0);
         newV= newV+offset-1;
         return new Pair<Long,List<Post>>(newV,posts) ;
@@ -155,6 +176,11 @@ public class NetworkPlaceholder implements NetworkService {
         if(id == null)
             return null;
         return userDao.getParticularUser(id);
+    }
+
+    @Override
+    public void post(Post post) {
+        postsDao.insertPost(post);
     }
 
 

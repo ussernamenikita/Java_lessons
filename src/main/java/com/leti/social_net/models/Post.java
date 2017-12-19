@@ -8,15 +8,21 @@ import javax.persistence.*;
 @Entity
 public class Post {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "posts_gen")
+    @SequenceGenerator(name = "posts_gen",sequenceName = "post_id_seq")
     private Integer id;
     private String title;
+
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "author_id")
     private User author;
+
     private Integer mediaId;
+
     private String text;
+
     private Integer likeCount;
+
     private long postedTime;
 
     public long getPostedTime() {

@@ -4,14 +4,14 @@ import com.leti.social_net.commands.Command;
 import com.leti.social_net.commands.Receiver;
 import com.leti.social_net.dao.UserDao;
 import com.leti.social_net.models.User;
-import com.leti.social_net.services.NetworkService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
+
 
 /**
  * Create new user command.

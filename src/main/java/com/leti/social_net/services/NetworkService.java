@@ -49,6 +49,7 @@ public interface NetworkService {
 
     /**
      * Get recent posts.
+     * Author by token
      * For example with offset = 0 and limit = 10
      * user receive last 10 added posts.
      * If need receive next 20 posts need send request with limit = 20,
@@ -59,7 +60,21 @@ public interface NetworkService {
      * @return list of recent posts, and index of last received post.
      */
     @Nullable
-    Pair<Long,List<Post>> getRecentPosts(@NotNull String token, long offset, int limit);
+    Pair<Long,List<Post>> getMyRecentPosts(@NotNull String token, long offset, int limit);
+
+    /**
+     * Get recent posts.
+     * For example with offset = 0 and limit = 10
+     * user receive last 10 added posts.
+     * If need receive next 20 posts need send request with limit = 20,
+     * and offset = {index of last received post from response}-20
+     * @param offset offset by posts count
+     * @param limit count of post need receive
+     * @return list of recent posts, and index of last received post.
+     */
+    @Nullable
+    Pair<Long,List<Post>> getRecentPosts(long offset, int limit);
+
 
 
 
@@ -121,4 +136,6 @@ public interface NetworkService {
     boolean userExist(String username);
 
     User getUser(Integer id);
+
+    void post(Post post);
 }

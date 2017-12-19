@@ -44,7 +44,7 @@ public class SendMessageToAllFriendsCommand implements Command {
         if(count > 0)
         {
             System.out.println("Enter your message");
-            message = receiver.getScanner().next();
+            message = receiver.getScanner().nextLine();
             final String localMsg = message;
             List<User> friends = network.getUserFriends(token,count,0);
             friends.forEach(user -> {
